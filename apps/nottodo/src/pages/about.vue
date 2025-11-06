@@ -12,6 +12,13 @@ interface BuildInfo {
 // 获取环境变量
 const backendBaseUrl = import.meta.env.VITE_BACKEND_BASE_URL
 
+// 前端构建信息
+const frontendBuildInfo = {
+  gitCommitHash: __GIT_COMMIT_HASH__,
+  gitCommitTime: __GIT_COMMIT_TIME__,
+  buildTime: __BUILD_TIME__,
+}
+
 // 响应式数据
 const buildInfo = ref<BuildInfo | null>(null)
 const loading = ref(true)
@@ -56,6 +63,27 @@ const reload = () => {
 
     <div class="navigation">
       <RouterLink to="/">返回首页</RouterLink>
+    </div>
+
+    <!-- 前端构建信息 -->
+    <div class="build-info-section">
+      <h2>前端构建信息</h2>
+      <div class="build-info">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Git Commit Hash:</span>
+            <span class="info-value">{{ frontendBuildInfo.gitCommitHash }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Git Commit Time:</span>
+            <span class="info-value">{{ frontendBuildInfo.gitCommitTime }}</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Build Time:</span>
+            <span class="info-value">{{ frontendBuildInfo.buildTime }}</span>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="build-info-section">
