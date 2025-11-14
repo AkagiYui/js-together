@@ -9,7 +9,7 @@
             <div class="flex items-center gap-3">
               <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
               <div>
-                <h1 class="text-lg font-semibold">任务列表</h1>
+                <h1 class="text-lg font-semibold text-highlighted">任务列表</h1>
                 <p class="text-xs text-gray-500">查看所有乐谱下载任务的状态</p>
               </div>
             </div>

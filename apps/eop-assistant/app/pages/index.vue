@@ -9,7 +9,7 @@
             <div class="flex items-center gap-3">
               <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
               <div>
-                <h1 class="text-lg font-semibold">人人钢琴乐谱下载助手</h1>
+                <h1 class="text-lg font-semibold text-highlighted">人人钢琴乐谱下载助手</h1>
                 <p class="text-xs text-gray-500">输入人人钢琴歌曲链接，服务器抓取乐谱图片并生成 PDF。</p>
               </div>
             </div>
@@ -42,30 +42,30 @@
 
           <div v-if="currentJob" class="space-y-3 pt-4 border-t border-gray-100">
             <div class="space-y-1 text-sm">
-              <div class="text-gray-500">当前任务 ID</div>
-              <div class="font-mono text-xs break-all">{{ currentJob.id }}</div>
+              <div class="text-muted">当前任务 ID</div>
+              <div class="font-mono text-xs break-all text-highlighted">{{ currentJob.id }}</div>
               <div v-if="currentJob.songTitle">
-                <span class="text-gray-500">歌曲名称：</span>
-                <span class="font-medium">{{ currentJob.songTitle }}</span>
+                <span class="text-muted">歌曲名称：</span>
+                <span class="font-medium text-highlighted">{{ currentJob.songTitle }}</span>
               </div>
               <div>
-                <span class="text-gray-500">任务状态：</span>
-                <span class="font-medium">{{ humanJobStatus(currentJob.status) }}</span>
+                <span class="text-muted">任务状态：</span>
+                <span class="font-medium text-highlighted">{{ humanJobStatus(currentJob.status) }}</span>
               </div>
             </div>
 
             <div class="space-y-3">
-              <h2 class="text-sm font-semibold">乐谱类型</h2>
+              <h2 class="text-sm font-semibold text-highlighted">乐谱类型</h2>
               <div
                 v-for="sheet in currentJob.sheets"
                 :key="sheet.id"
                 class="flex items-center justify-between gap-2 rounded border border-gray-100 px-3 py-2"
               >
                 <div>
-                  <div class="font-medium">
-                    {{ sheet.name }} <span class="text-xs text-gray-500">({{ sheet.id }})</span>
+                  <div class="font-medium text-highlighted">
+                    {{ sheet.name }} <span class="text-xs text-muted">({{ sheet.id }})</span>
                   </div>
-                  <div class="text-xs text-gray-500">
+                  <div class="text-xs text-muted">
                     状态：{{ humanSheetStatus(sheet) }}
                   </div>
                   <div v-if="sheet.error" class="text-xs text-red-600 mt-1">
@@ -79,11 +79,11 @@
                       :model-value="Math.round((sheet.downloadedImages / sheet.totalImages) * 100)"
                       size="xs"
                     />
-                    <div class="mt-1 text-[11px] text-gray-500">
+                    <div class="mt-1 text-[11px] text-muted">
                       {{ sheet.downloadedImages }} / {{ sheet.totalImages }} 张图片
                     </div>
                   </div>
-                  <div v-else class="text-[11px] text-gray-400">
+                  <div v-else class="text-[11px] text-dimmed">
                     等待开始下载…
                   </div>
 
