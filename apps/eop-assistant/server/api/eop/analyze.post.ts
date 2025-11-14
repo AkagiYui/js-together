@@ -16,7 +16,7 @@ export default defineEventHandler(async (event: H3Event) => {
   const body = (await readBody(event)) as AnalyzeBody
   const songUrl = body?.url?.trim()
   if (!songUrl) {
-    throw createError({ statusCode: 400, statusMessage: '缺少歌曲链接' })
+    throw createError({ statusCode: 400, message: '缺少歌曲链接' })
   }
 
   const existingJob = findReusableJobBySongUrl(songUrl)
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event: H3Event) => {
     job.status = 'error'
     job.error = error?.message || String(error)
     saveJob(job)
-    throw createError({ statusCode: 500, statusMessage: job.error })
+    throw createError({ statusCode: 500, message: job.error })
   }
 })
 

@@ -80,6 +80,11 @@ export function getJob(id: string) {
   return jobStore.get(id)
 }
 
+export function getAllJobs(): EopJob[] {
+  purgeExpiredJobs()
+  return Array.from(jobStore.values()).sort((a, b) => b.createdAt - a.createdAt)
+}
+
 // 
 export function findReusableJobBySongUrl(songUrl: string): EopJob | undefined {
   const now = Date.now()

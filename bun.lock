@@ -40,6 +40,9 @@
         "vue": "^3.5.24",
         "vue-router": "^4.6.3",
       },
+      "devDependencies": {
+        "@iconify-json/lucide": "^1.2.73",
+      },
     },
     "apps/kenko-music-house": {
       "name": "kenko-music-house",
@@ -323,6 +326,8 @@
     "@humanwhocodes/module-importer": ["@humanwhocodes/module-importer@1.0.1", "https://registry.npmmirror.com/@humanwhocodes/module-importer/-/module-importer-1.0.1.tgz", {}, "sha512-bxveV4V8v5Yb4ncFTT3rPSgZBOpCkjfK0y4oVVVJwIuDVBRMDXrPyXRL988i5ap9m9bnyEEjWfm5WkBmtffLfA=="],
 
     "@humanwhocodes/retry": ["@humanwhocodes/retry@0.4.3", "https://registry.npmmirror.com/@humanwhocodes/retry/-/retry-0.4.3.tgz", {}, "sha512-bV0Tgo9K4hfPCek+aMAn81RppFKv2ySDQeMoSZuvTASywNTnVJCArCZE2FWqpvIatKu7VMRLWlR1EazvVhDyhQ=="],
+
+    "@iconify-json/lucide": ["@iconify-json/lucide@1.2.73", "https://registry.npmmirror.com/@iconify-json/lucide/-/lucide-1.2.73.tgz", { "dependencies": { "@iconify/types": "*" } }, "sha512-++HFkqDNu4jqG5+vYT+OcVj9OiuPCw9wQuh8G5QWQnBRSJ9eKwSStiU8ORgOoK07xJsm/0VIHySMniXUUXP9Gw=="],
 
     "@iconify/collections": ["@iconify/collections@1.0.614", "https://registry.npmmirror.com/@iconify/collections/-/collections-1.0.614.tgz", { "dependencies": { "@iconify/types": "*" } }, "sha512-j+5AM/tcMXicNktY1N6ZfnRH8WrK4NurONe2LejP2eQi6aN7R+IH7tDax+7CJAIf+G25pRxlFOTDv4+X7FmerA=="],
 
