@@ -1,5 +1,12 @@
 import { H3Event } from 'h3'
-import { analyzeSongPage, createJob, createSheet, jobToPublic, saveJob } from '../../utils/eop-core'
+import {
+  analyzeSongPage,
+  createJob,
+  createSheet,
+  jobToPublic,
+  saveJob,
+  findReusableJobBySongUrl,
+} from '../../utils/eop-core'
 
 interface AnalyzeBody {
   url?: string
@@ -10,6 +17,11 @@ export default defineEventHandler(async (event: H3Event) => {
   const songUrl = body?.url?.trim()
   if (!songUrl) {
     throw createError({ statusCode: 400, statusMessage: '缺少歌曲链接' })
+  }
+
+  const existingJob = findReusableJobBySongUrl(songUrl)
+  if (existingJob) {
+    return jobToPublic(existingJob)
   }
 
   const job = createJob(songUrl)

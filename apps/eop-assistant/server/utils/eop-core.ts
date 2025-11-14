@@ -48,9 +48,24 @@ export interface EopJobPublic {
 }
 
 const jobStore = new Map<string, EopJob>()
+
+const JOB_TTL_MS = 60 * 60 * 1000 // 1 个小时
+
 const EOP_HOST = 'www.everyonepiano.cn'
 export const USER_AGENT =
   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36'
+
+function isJobExpired(job: EopJob, now = Date.now()) {
+  return now - job.createdAt > JOB_TTL_MS
+}
+
+export function purgeExpiredJobs(now = Date.now()) {
+  for (const [id, job] of jobStore) {
+    if (isJobExpired(job, now)) {
+      jobStore.delete(id)
+    }
+  }
+}
 
 export function createJob(songUrl: string): EopJob {
   return { id: randomUUID(), songUrl, createdAt: Date.now(), status: 'pending', sheets: [] }
@@ -61,7 +76,31 @@ export function saveJob(job: EopJob) {
 }
 
 export function getJob(id: string) {
+  purgeExpiredJobs()
   return jobStore.get(id)
+}
+
+// 
+export function findReusableJobBySongUrl(songUrl: string): EopJob | undefined {
+  const now = Date.now()
+  purgeExpiredJobs(now)
+  const targetId = extractSongId(songUrl)
+  if (!targetId) return undefined
+
+  let latest: EopJob | undefined
+  for (const job of jobStore.values()) {
+    if (isJobExpired(job, now)) continue
+    if (job.status === 'error') continue
+
+    const jobSongId = extractSongId(job.songUrl)
+    if (jobSongId !== targetId) continue
+
+    if (!latest || job.createdAt > latest.createdAt) {
+      latest = job
+    }
+  }
+
+  return latest
 }
 
 export function jobToPublic(job: EopJob): EopJobPublic {

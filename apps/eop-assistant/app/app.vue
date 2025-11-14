@@ -71,7 +71,7 @@
                 <div class="w-40">
                   <div v-if="sheet.totalImages">
                     <UProgress
-                      :value="Math.round((sheet.downloadedImages / sheet.totalImages) * 100)"
+                      :model-value="Math.round((sheet.downloadedImages / sheet.totalImages) * 100)"
                       size="xs"
                     />
                     <div class="mt-1 text-[11px] text-gray-500">
