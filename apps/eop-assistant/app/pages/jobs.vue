@@ -49,20 +49,20 @@
             <UTable :rows="jobs" :columns="(columns as any)">
               <template #songTitle-data="{ row }">
                 <div class="flex flex-col">
-                  <span class="font-medium">{{ (row as unknown as Job).songTitle || '未知歌曲' }}</span>
-                  <span class="text-xs text-gray-500 truncate max-w-xs">{{ (row as unknown as Job).songUrl }}</span>
+                  <span class="font-medium">{{ asJob(row).songTitle || '未知歌曲' }}</span>
+                  <span class="text-xs text-gray-500 truncate max-w-xs">{{ asJob(row).songUrl }}</span>
                 </div>
               </template>
 
               <template #status-data="{ row }">
-                <UBadge :color="getStatusColor((row as unknown as Job).status)" variant="soft">
-                  {{ humanJobStatus((row as unknown as Job).status) }}
+                <UBadge :color="getStatusColor(asJob(row).status)" variant="soft">
+                  {{ humanJobStatus(asJob(row).status) }}
                 </UBadge>
               </template>
 
               <template #sheets-data="{ row }">
                 <div class="flex flex-col gap-1">
-                  <div v-for="sheet in (row as unknown as Job).sheets" :key="sheet.id" class="text-xs">
+                  <div v-for="sheet in asJob(row).sheets" :key="sheet.id" class="text-xs">
                     <span class="font-medium">{{ sheet.name }}:</span>
                     <UBadge :color="getSheetStatusColor(sheet.status)" variant="soft" size="xs" class="ml-1">
                       {{ humanSheetStatus(sheet) }}
@@ -72,22 +72,22 @@
               </template>
 
               <template #createdAt-data="{ row }">
-                <span class="text-sm">{{ formatTime((row as unknown as Job).createdAt) }}</span>
+                <span class="text-sm">{{ formatTime(asJob(row).createdAt) }}</span>
               </template>
 
               <template #actions-data="{ row }">
                 <div class="flex gap-2">
                   <UButton
-                    v-for="sheet in (row as unknown as Job).sheets.filter((s: Sheet) => s.status === 'completed')"
+                    v-for="sheet in asJob(row).sheets.filter((s: Sheet) => s.status === 'completed')"
                     :key="sheet.id"
-                    :href="getDownloadUrl((row as unknown as Job).id, sheet.id)"
+                    :href="getDownloadUrl(asJob(row).id, sheet.id)"
                     variant="outline"
                     color="primary"
                     size="xs"
                   >
                     下载{{ sheet.name }}
                   </UButton>
-                  <span v-if="!(row as unknown as Job).sheets.some((s: Sheet) => s.status === 'completed')" class="text-xs text-gray-400">
+                  <span v-if="!asJob(row).sheets.some((s: Sheet) => s.status === 'completed')" class="text-xs text-gray-400">
                     暂无可下载
                   </span>
                 </div>
@@ -131,13 +131,20 @@ const errorMessage = ref<string | null>(null)
 const lastUpdateTime = ref<string>('')
 let refreshTimer: ReturnType<typeof setInterval> | null = null
 
+// 正确定义 columns 的类型 - Nuxt UI 使用简单的对象数组
 const columns = [
   { key: 'songTitle', label: '歌曲名称' },
   { key: 'status', label: '状态' },
   { key: 'sheets', label: '乐谱进度' },
   { key: 'createdAt', label: '创建时间' },
   { key: 'actions', label: '操作' },
-]
+] as const
+
+// 类型安全的辅助函数，用于将 UTable 的 row 转换为 Job 类型
+// 这比直接使用 (row as unknown as Job) 更清晰，并且集中了类型转换逻辑
+function asJob(row: unknown): Job {
+  return row as Job
+}
 
 async function fetchJobs() {
   loading.value = true
@@ -145,11 +152,13 @@ async function fetchJobs() {
   try {
     jobs.value = await $fetch<Job[]>('/api/eop/jobs')
     lastUpdateTime.value = new Date().toLocaleTimeString('zh-CN')
-  } catch (error: any) {
-    const data = error?.data as any
+  } catch (error: unknown) {
+    // 类型安全的错误处理
+    const errorObj = error as { data?: { message?: string; statusMessage?: string }; message?: string }
+    const data = errorObj?.data
     errorMessage.value =
       (data && (data.message || data.statusMessage)) ||
-      error?.message ||
+      errorObj?.message ||
       '获取任务列表失败，请稍后重试'
   } finally {
     loading.value = false
