@@ -67,7 +67,7 @@
                     :key="sheet.id"
                     class="flex items-center gap-2 text-xs"
                   >
-                    <span class="text-gray-600">{{ sheet.name }}</span>
+                    <span class="w-32 truncate">{{ sheet.name }}</span>
                     <UBadge size="xs" :color="getSheetStatusColor(sheet.status)">
                       {{ humanSheetStatus(sheet) }}
                     </UBadge>
@@ -93,11 +93,7 @@
                     size="xs"
                     variant="outline"
                     :disabled="sheet.status !== 'completed'"
-                    :to="
-                      sheet.status === 'completed'
-                        ? getDownloadUrl(asJob(row.original).id, sheet.id)
-                        : undefined
-                    "
+                    @click="downloadJobSheet(asJob(row.original).id, sheet.id)"
                   >
                     下载{{ sheet.name }}
                   </UButton>
@@ -205,6 +201,23 @@ function getDownloadUrl(jobId: string, kind: SheetKind) {
   return `/api/eop/jobs/${jobId}/downloadScore?${params.toString()}`
 }
 
+function triggerFileDownload(url: string) {
+  if (typeof window === 'undefined') return
+
+  const link = document.createElement('a')
+  link.href = url
+  link.target = '_blank'
+  link.rel = 'noopener'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+function downloadJobSheet(jobId: string, kind: SheetKind) {
+  const url = getDownloadUrl(jobId, kind)
+  triggerFileDownload(url)
+}
+
 function humanJobStatus(status: Job['status']) {
   if (status === 'pending') return '待开始'
   if (status === 'processing') return '处理中'
@@ -237,7 +250,7 @@ function getStatusColor(status: Job['status']) {
     case 'pending':
       return 'neutral'
     case 'processing':
-      return 'info'
+      return 'primary'
     case 'completed':
       return 'success'
     case 'error':
@@ -254,7 +267,7 @@ function getSheetStatusColor(status: string) {
     case 'analyzing':
     case 'downloading':
     case 'generating':
-      return 'info'
+      return 'primary'
     case 'completed':
       return 'success'
     case 'error':

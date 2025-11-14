@@ -89,11 +89,11 @@
 
                   <UButton
                     v-if="sheet.status === 'completed'"
-                    :href="getDownloadUrl(sheet.id)"
                     variant="outline"
                     color="primary"
                     size="xs"
                     class="mt-2 w-full"
+                    @click="downloadSheetPdf(sheet.id)"
                   >
                     下载 PDF
                   </UButton>
@@ -195,6 +195,25 @@ function getDownloadUrl(kind: SheetKind) {
   if (!currentJob.value) return '#'
   const params = new URLSearchParams({ kind })
   return `/api/eop/jobs/${currentJob.value.id}/downloadScore?${params.toString()}`
+}
+
+function triggerFileDownload(url: string) {
+  if (typeof window === 'undefined') return
+
+  const link = document.createElement('a')
+  link.href = url
+  link.target = '_blank'
+  link.rel = 'noopener'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
+
+function downloadSheetPdf(kind: SheetKind) {
+  if (!currentJob.value) return
+
+  const url = getDownloadUrl(kind)
+  triggerFileDownload(url)
 }
 
 function humanJobStatus(status: Job['status']) {
