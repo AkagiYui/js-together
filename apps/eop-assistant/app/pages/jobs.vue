@@ -2,19 +2,20 @@
   <div class="min-h-screen bg-gray-50 text-gray-900">
     <NuxtRouteAnnouncer />
 
-    <UContainer class="py-10">
+    <UContainer class="py-4 sm:py-10 px-4">
       <UCard>
         <template #header>
-          <div class="flex items-center justify-between">
+          <!-- 响应式 Header：移动端垂直堆叠，桌面端水平排列 -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="flex items-center gap-3">
-              <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
-              <div>
-                <h1 class="text-lg font-semibold text-highlighted">任务列表</h1>
-                <p class="text-xs text-gray-500">查看所有乐谱下载任务的状态</p>
+              <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded shrink-0" />
+              <div class="min-w-0">
+                <h1 class="text-base sm:text-lg font-semibold text-highlighted">任务列表</h1>
+                <p class="text-xs text-gray-500 truncate sm:whitespace-normal">查看所有乐谱下载任务的状态</p>
               </div>
             </div>
-            <NuxtLink to="/">
-              <UButton variant="ghost" size="sm">返回首页</UButton>
+            <NuxtLink to="/" class="self-start sm:self-auto">
+              <UButton variant="ghost" size="sm" class="w-full sm:w-auto">返回首页</UButton>
             </NuxtLink>
           </div>
         </template>
@@ -25,7 +26,7 @@
           </div>
 
           <div v-else-if="errorMessage" class="text-center py-8">
-            <p class="text-sm text-red-600">{{ errorMessage }}</p>
+            <p class="text-sm text-red-600 wrap-break-word px-4">{{ errorMessage }}</p>
             <UButton @click="fetchJobs" variant="outline" size="sm" class="mt-4">
               重试
             </UButton>
@@ -39,67 +40,129 @@
           </div>
 
           <div v-else class="space-y-4">
-            <div class="flex items-center justify-between">
+            <!-- 响应式统计信息：移动端垂直堆叠 -->
+            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
               <p class="text-sm text-gray-600">共 {{ jobs.length }} 个任务</p>
               <p class="text-xs text-gray-500">
                 最后更新: {{ lastUpdateTime }}
               </p>
             </div>
 
-            <UTable :data="jobs" :columns="columns">
-              <template #songTitle-cell="{ row }">
-                {{ asJob(row.original).songTitle || '未知歌曲' }}
-              </template>
+            <!-- 桌面端显示表格 -->
+            <div class="hidden md:block">
+              <UTable :data="jobs" :columns="columns">
+                <template #songTitle-cell="{ row }">
+                  {{ asJob(row.original).songTitle || '未知歌曲' }}
+                </template>
 
-              <template #status-cell="{ row }">
-                <UBadge
-                  size="xs"
-                  :color="getStatusColor(asJob(row.original).status)"
-                >
-                  {{ humanJobStatus(asJob(row.original).status) }}
-                </UBadge>
-              </template>
-
-              <template #sheets-cell="{ row }">
-                <div class="space-y-1">
-                  <div
-                    v-for="sheet in asJob(row.original).sheets"
-                    :key="sheet.id"
-                    class="flex items-center gap-2 text-xs"
+                <template #status-cell="{ row }">
+                  <UBadge
+                    size="xs"
+                    :color="getStatusColor(asJob(row.original).status)"
                   >
-                    <span class="w-32 truncate">{{ sheet.name }}</span>
-                    <UBadge size="xs" :color="getSheetStatusColor(sheet.status)">
-                      {{ humanSheetStatus(sheet) }}
-                    </UBadge>
-                    <span v-if="sheet.totalImages" class="text-gray-400">
-                      {{ sheet.downloadedImages }}/{{ sheet.totalImages }}
-                    </span>
-                    <span v-else class="text-gray-400">
-                      {{ sheet.downloadedImages }}
-                    </span>
+                    {{ humanJobStatus(asJob(row.original).status) }}
+                  </UBadge>
+                </template>
+
+                <template #sheets-cell="{ row }">
+                  <div class="space-y-1">
+                    <div
+                      v-for="sheet in asJob(row.original).sheets"
+                      :key="sheet.id"
+                      class="flex items-center gap-2 text-xs"
+                    >
+                      <span class="w-32 truncate">{{ sheet.name }}</span>
+                      <UBadge size="xs" :color="getSheetStatusColor(sheet.status)">
+                        {{ humanSheetStatus(sheet) }}
+                      </UBadge>
+                      <span v-if="sheet.totalImages" class="text-gray-400">
+                        {{ sheet.downloadedImages }}/{{ sheet.totalImages }}
+                      </span>
+                      <span v-else class="text-gray-400">
+                        {{ sheet.downloadedImages }}
+                      </span>
+                    </div>
+                  </div>
+                </template>
+
+                <template #createdAt-cell="{ row }">
+                  {{ formatTime(asJob(row.original).createdAt) }}
+                </template>
+
+                <template #actions-cell="{ row }">
+                  <div class="flex flex-wrap gap-2">
+                    <UButton
+                      v-for="sheet in asJob(row.original).sheets"
+                      :key="sheet.id"
+                      size="xs"
+                      variant="outline"
+                      :disabled="sheet.status !== 'completed'"
+                      @click="downloadJobSheet(asJob(row.original).id, sheet.id)"
+                    >
+                      下载{{ sheet.name }}
+                    </UButton>
+                  </div>
+                </template>
+              </UTable>
+            </div>
+
+            <!-- 移动端显示卡片列表 -->
+            <div class="md:hidden space-y-3">
+              <div
+                v-for="job in jobs"
+                :key="job.id"
+                class="border border-gray-200 dark:border-gray-700 rounded-lg p-4 space-y-3 bg-white dark:bg-gray-900"
+              >
+                <!-- 任务标题和状态 -->
+                <div class="flex items-start justify-between gap-2">
+                  <div class="min-w-0 flex-1">
+                    <h3 class="font-medium text-highlighted text-sm wrap-break-word">
+                      {{ job.songTitle || '未知歌曲' }}
+                    </h3>
+                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                      {{ formatTime(job.createdAt) }}
+                    </p>
+                  </div>
+                  <UBadge
+                    size="xs"
+                    :color="getStatusColor(job.status)"
+                    class="shrink-0"
+                  >
+                    {{ humanJobStatus(job.status) }}
+                  </UBadge>
+                </div>
+
+                <!-- 乐谱进度 -->
+                <div class="space-y-2">
+                  <div
+                    v-for="sheet in job.sheets"
+                    :key="sheet.id"
+                    class="flex items-center justify-between gap-2 text-xs bg-gray-50 dark:bg-gray-800 rounded p-2"
+                  >
+                    <div class="min-w-0 flex-1">
+                      <div class="font-medium text-highlighted">{{ sheet.name }}</div>
+                      <div class="flex items-center gap-2 mt-1">
+                        <UBadge size="xs" :color="getSheetStatusColor(sheet.status)">
+                          {{ humanSheetStatus(sheet) }}
+                        </UBadge>
+                        <span v-if="sheet.totalImages" class="text-gray-400 dark:text-gray-500">
+                          {{ sheet.downloadedImages }}/{{ sheet.totalImages }}
+                        </span>
+                      </div>
+                    </div>
+                    <UButton
+                      v-if="sheet.status === 'completed'"
+                      size="xs"
+                      variant="outline"
+                      @click="downloadJobSheet(job.id, sheet.id)"
+                      class="shrink-0"
+                    >
+                      下载
+                    </UButton>
                   </div>
                 </div>
-              </template>
-
-              <template #createdAt-cell="{ row }">
-                {{ formatTime(asJob(row.original).createdAt) }}
-              </template>
-
-              <template #actions-cell="{ row }">
-                <div class="flex flex-wrap gap-2">
-                  <UButton
-                    v-for="sheet in asJob(row.original).sheets"
-                    :key="sheet.id"
-                    size="xs"
-                    variant="outline"
-                    :disabled="sheet.status !== 'completed'"
-                    @click="downloadJobSheet(asJob(row.original).id, sheet.id)"
-                  >
-                    下载{{ sheet.name }}
-                  </UButton>
-                </div>
-              </template>
-            </UTable>
+              </div>
+            </div>
           </div>
         </div>
       </UCard>

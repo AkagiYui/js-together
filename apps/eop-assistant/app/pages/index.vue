@@ -2,19 +2,20 @@
   <div class="min-h-screen bg-gray-50 text-gray-900">
     <NuxtRouteAnnouncer />
 
-    <UContainer class="py-10">
+    <UContainer class="py-4 sm:py-10 px-4">
       <UCard>
         <template #header>
-          <div class="flex items-center justify-between">
+          <!-- 响应式 Header：移动端垂直堆叠，桌面端水平排列 -->
+          <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
             <div class="flex items-center gap-3">
-              <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
-              <div>
-                <h1 class="text-lg font-semibold text-highlighted">EOP助手</h1>
-                <p class="text-xs text-gray-500">输入人人钢琴歌曲链接，生成 PDF。</p>
+              <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded shrink-0" />
+              <div class="min-w-0">
+                <h1 class="text-base sm:text-lg font-semibold text-highlighted">EOP助手</h1>
+                <p class="text-xs text-gray-500 truncate sm:whitespace-normal">输入人人钢琴歌曲链接，生成 PDF。</p>
               </div>
             </div>
-            <NuxtLink to="/jobs">
-              <UButton variant="outline" size="sm">查看任务列表</UButton>
+            <NuxtLink to="/jobs" class="self-start sm:self-auto">
+              <UButton variant="outline" size="sm" class="w-full sm:w-auto">查看任务列表</UButton>
             </NuxtLink>
           </div>
         </template>
@@ -24,19 +25,32 @@
             label="歌曲链接"
             description="例如：https://www.everyonepiano.cn/Music-14118.html"
           >
-            <UInput v-model="songUrl" placeholder="粘贴人人钢琴歌曲链接" />
+            <UInput v-model="songUrl" placeholder="粘贴人人钢琴歌曲链接" class="text-sm sm:text-base" />
           </UFormField>
 
-          <div class="flex gap-2">
-            <UButton :loading="loading" @click="onStart" color="primary">
+          <!-- 响应式按钮组：移动端全宽，桌面端自适应 -->
+          <div class="flex flex-col sm:flex-row gap-2">
+            <UButton
+              :loading="loading"
+              @click="onStart"
+              color="primary"
+              class="w-full sm:w-auto"
+              size="md"
+            >
               {{ currentJob ? '重新生成' : '开始生成 PDF' }}
             </UButton>
-            <UButton variant="ghost" @click="onReset" :disabled="!currentJob && !errorMessage">
+            <UButton
+              variant="ghost"
+              @click="onReset"
+              :disabled="!currentJob && !errorMessage"
+              class="w-full sm:w-auto"
+              size="md"
+            >
               重置
             </UButton>
           </div>
 
-          <p v-if="errorMessage" class="text-sm text-red-600">
+          <p v-if="errorMessage" class="text-sm text-red-600 wrap-break-word">
             {{ errorMessage }}
           </p>
 
@@ -46,7 +60,7 @@
               <div class="font-mono text-xs break-all text-highlighted">{{ currentJob.id }}</div>
               <div v-if="currentJob.songTitle">
                 <span class="text-muted">歌曲名称：</span>
-                <span class="font-medium text-highlighted">{{ currentJob.songTitle }}</span>
+                <span class="font-medium text-highlighted wrap-break-word">{{ currentJob.songTitle }}</span>
               </div>
               <div>
                 <span class="text-muted">任务状态：</span>
@@ -56,24 +70,26 @@
 
             <div class="space-y-3">
               <h2 class="text-sm font-semibold text-highlighted">乐谱类型</h2>
+              <!-- 响应式乐谱卡片：移动端垂直堆叠，桌面端保持原样 -->
               <div
                 v-for="sheet in currentJob.sheets"
                 :key="sheet.id"
-                class="flex items-center justify-between gap-2 rounded border border-gray-100 px-3 py-2"
+                class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-2 rounded border border-gray-100 px-3 py-3 sm:py-2"
               >
-                <div>
-                  <div class="font-medium text-highlighted">
+                <div class="min-w-0 flex-1">
+                  <div class="font-medium text-highlighted text-sm sm:text-base">
                     {{ sheet.name }} <span class="text-xs text-muted">({{ sheet.id }})</span>
                   </div>
-                  <div class="text-xs text-muted">
+                  <div class="text-xs text-muted mt-1">
                     状态：{{ humanSheetStatus(sheet) }}
                   </div>
-                  <div v-if="sheet.error" class="text-xs text-red-600 mt-1">
+                  <div v-if="sheet.error" class="text-xs text-red-600 mt-1 wrap-break-word">
                     {{ sheet.error }}
                   </div>
                 </div>
 
-                <div class="w-40">
+                <!-- 响应式进度区域：移动端全宽，桌面端固定宽度 -->
+                <div class="w-full sm:w-40 shrink-0">
                   <div v-if="sheet.totalImages">
                     <UProgress
                       :model-value="Math.round((sheet.downloadedImages / sheet.totalImages) * 100)"
@@ -91,8 +107,8 @@
                     v-if="sheet.status === 'completed'"
                     variant="outline"
                     color="primary"
-                    size="xs"
-                    class="mt-2 w-full"
+                    size="sm"
+                    class="mt-2 w-full min-h-[36px]"
                     @click="downloadSheetPdf(sheet.id)"
                   >
                     下载 PDF
