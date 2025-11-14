@@ -7,7 +7,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <NuxtImg src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
+              <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
               <div>
                 <h1 class="text-lg font-semibold">任务列表</h1>
                 <p class="text-xs text-gray-500">查看所有乐谱下载任务的状态</p>

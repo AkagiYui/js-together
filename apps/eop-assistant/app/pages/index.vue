@@ -7,7 +7,7 @@
         <template #header>
           <div class="flex items-center justify-between">
             <div class="flex items-center gap-3">
-              <NuxtImg src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
+              <img src="/favicon.ico" alt="EOP" width="32" height="32" class="rounded" />
               <div>
                 <h1 class="text-lg font-semibold">人人钢琴乐谱下载助手</h1>
                 <p class="text-xs text-gray-500">输入人人钢琴歌曲链接，服务器抓取乐谱图片并生成 PDF。</p>
