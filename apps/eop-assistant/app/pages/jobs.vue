@@ -46,50 +46,61 @@
               </p>
             </div>
 
-            <UTable :rows="jobs" :columns="(columns as any)">
-              <template #songTitle-data="{ row }">
-                <div class="flex flex-col">
-                  <span class="font-medium">{{ asJob(row).songTitle || '未知歌曲' }}</span>
-                  <span class="text-xs text-gray-500 truncate max-w-xs">{{ asJob(row).songUrl }}</span>
-                </div>
+            <UTable :data="jobs" :columns="columns">
+              <template #songTitle-cell="{ row }">
+                {{ asJob(row.original).songTitle || '未知歌曲' }}
               </template>
 
-              <template #status-data="{ row }">
-                <UBadge :color="getStatusColor(asJob(row).status)" variant="soft">
-                  {{ humanJobStatus(asJob(row).status) }}
+              <template #status-cell="{ row }">
+                <UBadge
+                  size="xs"
+                  :color="getStatusColor(asJob(row.original).status)"
+                >
+                  {{ humanJobStatus(asJob(row.original).status) }}
                 </UBadge>
               </template>
 
-              <template #sheets-data="{ row }">
-                <div class="flex flex-col gap-1">
-                  <div v-for="sheet in asJob(row).sheets" :key="sheet.id" class="text-xs">
-                    <span class="font-medium">{{ sheet.name }}:</span>
-                    <UBadge :color="getSheetStatusColor(sheet.status)" variant="soft" size="xs" class="ml-1">
+              <template #sheets-cell="{ row }">
+                <div class="space-y-1">
+                  <div
+                    v-for="sheet in asJob(row.original).sheets"
+                    :key="sheet.id"
+                    class="flex items-center gap-2 text-xs"
+                  >
+                    <span class="text-gray-600">{{ sheet.name }}</span>
+                    <UBadge size="xs" :color="getSheetStatusColor(sheet.status)">
                       {{ humanSheetStatus(sheet) }}
                     </UBadge>
+                    <span v-if="sheet.totalImages" class="text-gray-400">
+                      {{ sheet.downloadedImages }}/{{ sheet.totalImages }}
+                    </span>
+                    <span v-else class="text-gray-400">
+                      {{ sheet.downloadedImages }}
+                    </span>
                   </div>
                 </div>
               </template>
 
-              <template #createdAt-data="{ row }">
-                <span class="text-sm">{{ formatTime(asJob(row).createdAt) }}</span>
+              <template #createdAt-cell="{ row }">
+                {{ formatTime(asJob(row.original).createdAt) }}
               </template>
 
-              <template #actions-data="{ row }">
-                <div class="flex gap-2">
+              <template #actions-cell="{ row }">
+                <div class="flex flex-wrap gap-2">
                   <UButton
-                    v-for="sheet in asJob(row).sheets.filter((s: Sheet) => s.status === 'completed')"
+                    v-for="sheet in asJob(row.original).sheets"
                     :key="sheet.id"
-                    :href="getDownloadUrl(asJob(row).id, sheet.id)"
-                    variant="outline"
-                    color="primary"
                     size="xs"
+                    variant="outline"
+                    :disabled="sheet.status !== 'completed'"
+                    :to="
+                      sheet.status === 'completed'
+                        ? getDownloadUrl(asJob(row.original).id, sheet.id)
+                        : undefined
+                    "
                   >
                     下载{{ sheet.name }}
                   </UButton>
-                  <span v-if="!asJob(row).sheets.some((s: Sheet) => s.status === 'completed')" class="text-xs text-gray-400">
-                    暂无可下载
-                  </span>
                 </div>
               </template>
             </UTable>
@@ -102,6 +113,7 @@
 
 <script setup lang="ts">
 import { onBeforeUnmount, onMounted, ref } from 'vue'
+import type { TableColumn } from '@nuxt/ui'
 
 type SheetKind = 'stave' | 'number'
 
@@ -131,14 +143,21 @@ const errorMessage = ref<string | null>(null)
 const lastUpdateTime = ref<string>('')
 let refreshTimer: ReturnType<typeof setInterval> | null = null
 
-// 正确定义 columns 的类型 - Nuxt UI 使用简单的对象数组
-const columns = [
-  { key: 'songTitle', label: '歌曲名称' },
-  { key: 'status', label: '状态' },
-  { key: 'sheets', label: '乐谱进度' },
-  { key: 'createdAt', label: '创建时间' },
-  { key: 'actions', label: '操作' },
-] as const
+// 使用 useFetch 加载初始数据
+const { data: initialJobs } = await useFetch<Job[]>('/api/eop/jobs')
+if (initialJobs.value) {
+  jobs.value = initialJobs.value
+  lastUpdateTime.value = new Date().toLocaleTimeString('zh-CN')
+}
+
+// 正确定义 columns 的类型，使用 Nuxt UI v4 的 TableColumn
+const columns: TableColumn<Job>[] = [
+  { accessorKey: 'songTitle', header: '歌曲名称' },
+  { accessorKey: 'status', header: '状态' },
+  { accessorKey: 'sheets', header: '乐谱进度' },
+  { accessorKey: 'createdAt', header: '创建时间' },
+  { id: 'actions', header: '操作' },
+]
 
 // 类型安全的辅助函数，用于将 UTable 的 row 转换为 Job 类型
 // 这比直接使用 (row as unknown as Job) 更清晰，并且集中了类型转换逻辑
@@ -150,7 +169,9 @@ async function fetchJobs() {
   loading.value = true
   errorMessage.value = null
   try {
-    jobs.value = await $fetch<Job[]>('/api/eop/jobs')
+    const data = await $fetch<Job[]>('/api/eop/jobs')
+    console.log('Fetched jobs:', data)
+    jobs.value = data
     lastUpdateTime.value = new Date().toLocaleTimeString('zh-CN')
   } catch (error: unknown) {
     // 类型安全的错误处理
@@ -276,8 +297,8 @@ function formatTime(timestamp: number) {
 }
 
 // 页面加载时获取数据并启动自动刷新（仅在客户端执行）
-onMounted(() => {
-  fetchJobs()
+onMounted(async () => {
+  await fetchJobs()
   startAutoRefresh()
 })
 
