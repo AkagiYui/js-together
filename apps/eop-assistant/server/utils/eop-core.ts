@@ -85,7 +85,11 @@ export function getAllJobs(): EopJob[] {
   return Array.from(jobStore.values()).sort((a, b) => b.createdAt - a.createdAt)
 }
 
-// 
+/**
+ * 根据歌曲 URL 查找可复用的任务
+ * - 只要歌曲 ID 相同，就返回最新的任务（包括失败的任务）
+ * - 不再跳过失败状态的任务，由调用方决定如何处理
+ */
 export function findReusableJobBySongUrl(songUrl: string): EopJob | undefined {
   const now = Date.now()
   purgeExpiredJobs(now)
@@ -95,7 +99,6 @@ export function findReusableJobBySongUrl(songUrl: string): EopJob | undefined {
   let latest: EopJob | undefined
   for (const job of jobStore.values()) {
     if (isJobExpired(job, now)) continue
-    if (job.status === 'error') continue
 
     const jobSongId = extractSongId(job.songUrl)
     if (jobSongId !== targetId) continue
@@ -106,6 +109,31 @@ export function findReusableJobBySongUrl(songUrl: string): EopJob | undefined {
   }
 
   return latest
+}
+
+/**
+ * 重置失败任务的状态，使其可以重新处理
+ * - 将任务状态从 error 改为 pending
+ * - 清除任务和所有 sheets 的错误信息
+ * - 重置所有 sheets 的状态和进度
+ */
+export function resetFailedJob(job: EopJob): void {
+  // 重置任务状态
+  job.status = 'pending'
+  job.error = undefined
+
+  // 重置所有 sheets
+  for (const sheet of job.sheets) {
+    sheet.status = 'pending'
+    sheet.error = undefined
+    sheet.imageUrls = []
+    sheet.totalImages = null
+    sheet.downloadedImages = 0
+    sheet.pdfBytes = undefined
+  }
+
+  // 保存更新后的任务
+  saveJob(job)
 }
 
 export function jobToPublic(job: EopJob): EopJobPublic {
