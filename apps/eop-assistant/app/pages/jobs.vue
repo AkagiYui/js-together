@@ -46,23 +46,23 @@
               </p>
             </div>
 
-            <UTable :rows="jobs" :columns="columns as any">
-              <template #songTitle-data="{ row }: { row: Job }">
+            <UTable :rows="jobs" :columns="(columns as any)">
+              <template #songTitle-data="{ row }">
                 <div class="flex flex-col">
-                  <span class="font-medium">{{ row.songTitle || '未知歌曲' }}</span>
-                  <span class="text-xs text-gray-500 truncate max-w-xs">{{ row.songUrl }}</span>
+                  <span class="font-medium">{{ (row as unknown as Job).songTitle || '未知歌曲' }}</span>
+                  <span class="text-xs text-gray-500 truncate max-w-xs">{{ (row as unknown as Job).songUrl }}</span>
                 </div>
               </template>
 
-              <template #status-data="{ row }: { row: Job }">
-                <UBadge :color="getStatusColor(row.status)" variant="soft">
-                  {{ humanJobStatus(row.status) }}
+              <template #status-data="{ row }">
+                <UBadge :color="getStatusColor((row as unknown as Job).status)" variant="soft">
+                  {{ humanJobStatus((row as unknown as Job).status) }}
                 </UBadge>
               </template>
 
-              <template #sheets-data="{ row }: { row: Job }">
+              <template #sheets-data="{ row }">
                 <div class="flex flex-col gap-1">
-                  <div v-for="sheet in row.sheets" :key="sheet.id" class="text-xs">
+                  <div v-for="sheet in (row as unknown as Job).sheets" :key="sheet.id" class="text-xs">
                     <span class="font-medium">{{ sheet.name }}:</span>
                     <UBadge :color="getSheetStatusColor(sheet.status)" variant="soft" size="xs" class="ml-1">
                       {{ humanSheetStatus(sheet) }}
@@ -71,23 +71,23 @@
                 </div>
               </template>
 
-              <template #createdAt-data="{ row }: { row: Job }">
-                <span class="text-sm">{{ formatTime(row.createdAt) }}</span>
+              <template #createdAt-data="{ row }">
+                <span class="text-sm">{{ formatTime((row as unknown as Job).createdAt) }}</span>
               </template>
 
-              <template #actions-data="{ row }: { row: Job }">
+              <template #actions-data="{ row }">
                 <div class="flex gap-2">
                   <UButton
-                    v-for="sheet in row.sheets.filter((s) => s.status === 'completed')"
+                    v-for="sheet in (row as unknown as Job).sheets.filter((s: Sheet) => s.status === 'completed')"
                     :key="sheet.id"
-                    :href="getDownloadUrl(row.id, sheet.id)"
+                    :href="getDownloadUrl((row as unknown as Job).id, sheet.id)"
                     variant="outline"
                     color="primary"
                     size="xs"
                   >
                     下载{{ sheet.name }}
                   </UButton>
-                  <span v-if="!row.sheets.some((s) => s.status === 'completed')" class="text-xs text-gray-400">
+                  <span v-if="!(row as unknown as Job).sheets.some((s: Sheet) => s.status === 'completed')" class="text-xs text-gray-400">
                     暂无可下载
                   </span>
                 </div>
@@ -137,7 +137,7 @@ const columns = [
   { key: 'sheets', label: '乐谱进度' },
   { key: 'createdAt', label: '创建时间' },
   { key: 'actions', label: '操作' },
-] as const
+]
 
 async function fetchJobs() {
   loading.value = true
