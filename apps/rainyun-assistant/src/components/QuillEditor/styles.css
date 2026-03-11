@@ -1,0 +1,48 @@
+.quill-editor {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  .ql-container {
+    flex: 1;
+    overflow-y: auto;
+    border: none !important;
+  }
+
+  .ql-toolbar {
+    flex: 0 0 auto;
+    border: none;
+    border-bottom: 1px solid var(--semi-color-border);
+  }
+
+  .ql-editor.ql-blank::before {
+    color: var(--semi-color-text-2);
+    font-style: normal !important;
+    opacity: 0.8;
+  }
+
+  .ql-snow {
+    .ql-stroke {
+      stroke: var(--semi-color-text-0) !important; /* purple-600 */
+    }
+    .ql-fill {
+      fill: var(--semi-color-text-0) !important;
+    }
+  }
+
+  .ql-picker-item.ql-active {
+    color: var(--semi-color-primary) !important;
+  }
+
+  .ql-picker-item:hover {
+    color: var(--semi-color-primary) !important;
+  }
+
+  .ql-picker-item.ql-selected {
+    color: var(--semi-color-primary) !important;
+  }
+
+  .ql-picker-item:hover {
+    color: var(--semi-color-primary) !important;
+  }
+}
