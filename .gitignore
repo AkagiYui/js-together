@@ -16,6 +16,7 @@ auto-imports.d.ts
 
 # Dependencies
 node_modules
+node-compile-cache
 .pnp
 .pnp.js
 

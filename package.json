@@ -1,13 +1,7 @@
 {
   "name": "js-together",
   "private": true,
-  "scripts": {
-    "build": "bun run build",
-    "dev": "bun run dev",
-    "lint": "bun run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "bun run check-types"
-  },
+  "scripts": {},
   "devDependencies": {
     "prettier": "^3.6.2",
     "typescript": "5.9.2"
@@ -15,9 +9,5 @@
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "bun@1.2.18",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+  "packageManager": "pnpm@10.13.1"
 }
