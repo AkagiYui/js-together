@@ -1,6 +1,11 @@
 packages:
-  - apps/**
-  - packages/**
+  - 'app-*'
+  - 'package-*'
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+  vue-demi: true
 
 onlyBuiltDependencies:
   - '@parcel/watcher'
