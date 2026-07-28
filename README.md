@@ -9,7 +9,7 @@
 | `app-eop-assistant` | Nuxt | EOP 助手，everyonepiano 简谱抓取与 PDF 生成 |
 | `app-wasm` | Vite | WebAssembly 实验项目 |
 
-`app-*` 为应用项目，`package-*` 为可共享的库（暂无）。
+`app-*` 为应用项目，`lib-*` 为可共享的库（暂无）。
 
 ## 工具链
 
