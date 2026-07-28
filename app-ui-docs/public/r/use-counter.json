@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "use-counter",
+  "title": "useCounter",
+  "description": "A simple counter hook with increment, decrement, and reset actions.",
+  "files": [
+    {
+      "path": "src/hooks/use-counter.ts",
+      "content": "import { useCallback, useState } from \"react\";\n\nexport function useCounter(initialValue: number = 0) {\n  const [count, setCount] = useState(initialValue);\n\n  const increment = useCallback(() => setCount((c) => c + 1), []);\n  const decrement = useCallback(() => setCount((c) => c - 1), []);\n  const reset = useCallback(() => setCount(initialValue), [initialValue]);\n\n  return { count, increment, decrement, reset };\n}\n",
+      "type": "registry:hook"
+    }
+  ],
+  "type": "registry:hook"
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "card-counter",
+  "title": "Card Counter",
+  "description": "A card component with a built-in counter, combining Button and useCounter.",
+  "registryDependencies": [
+    "button",
+    "use-counter"
+  ],
+  "files": [
+    {
+      "path": "src/components/ui/card-counter.tsx",
+      "content": "import * as React from \"react\";\n\nimport { Button } from \"./button\";\nimport { useCounter } from \"../../hooks/use-counter\";\nimport { cn } from \"../../lib/utils\";\n\nfunction CardCounter({\n  className,\n  title = \"Counter\",\n  initialValue = 0,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  title?: string;\n  initialValue?: number;\n}) {\n  const { count, increment, decrement, reset } = useCounter(initialValue);\n\n  return (\n    <div\n      data-slot=\"card-counter\"\n      className={cn(\n        \"flex flex-col gap-4 rounded-lg border bg-card p-6 text-card-foreground shadow-sm\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"flex items-center justify-between\">\n        <h3 className=\"text-lg font-semibold leading-none\">{title}</h3>\n        <span className=\"rounded-md bg-primary px-2.5 py-0.5 text-sm font-medium text-primary-foreground\">\n          {count}\n        </span>\n      </div>\n      <div className=\"flex gap-2\">\n        <Button size=\"sm\" onClick={decrement}>\n          -1\n        </Button>\n        <Button size=\"sm\" variant=\"outline\" onClick={reset}>\n          Reset\n        </Button>\n        <Button size=\"sm\" onClick={increment}>\n          +1\n        </Button>\n      </div>\n    </div>\n  );\n}\n\nexport { CardCounter };\n",
+      "type": "registry:component"
+    }
+  ],
+  "type": "registry:block"
+}

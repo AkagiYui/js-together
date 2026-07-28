@@ -1,0 +1,68 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "@akagiyui/ui-react",
+  "homepage": "https://github.com/AkagiYui/js-together",
+  "items": [
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "Tailwind class merge utility (cn) using clsx and tailwind-merge.",
+      "files": [
+        {
+          "path": "src/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ],
+      "dependencies": ["clsx", "tailwind-merge"]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "A versatile button component with multiple variants and sizes, built on Radix Slot for asChild support.",
+      "files": [
+        {
+          "path": "src/components/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "clsx",
+        "tailwind-merge",
+        "class-variance-authority",
+        "@radix-ui/react-slot"
+      ],
+      "registryDependencies": ["utils"]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "use-counter",
+      "type": "registry:hook",
+      "title": "useCounter",
+      "description": "A simple counter hook with increment, decrement, and reset actions.",
+      "files": [
+        {
+          "path": "src/hooks/use-counter.ts",
+          "type": "registry:hook"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "card-counter",
+      "type": "registry:block",
+      "title": "Card Counter",
+      "description": "A card component with a built-in counter, combining Button and useCounter.",
+      "files": [
+        {
+          "path": "src/components/ui/card-counter.tsx",
+          "type": "registry:component"
+        }
+      ],
+      "registryDependencies": ["button", "use-counter"]
+    }
+  ]
+}

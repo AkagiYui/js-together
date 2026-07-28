@@ -1,0 +1,51 @@
+{
+  "name": "@akagiyui/ui-react",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.mts",
+      "import": "./dist/index.mjs"
+    },
+    "./button": {
+      "types": "./dist/components/ui/button.d.mts",
+      "import": "./dist/components/ui/button.mjs"
+    },
+    "./card-counter": {
+      "types": "./dist/components/ui/card-counter.d.mts",
+      "import": "./dist/components/ui/card-counter.mjs"
+    },
+    "./use-counter": {
+      "types": "./dist/hooks/use-counter.d.mts",
+      "import": "./dist/hooks/use-counter.mjs"
+    },
+    "./utils": {
+      "types": "./dist/lib/utils.d.mts",
+      "import": "./dist/lib/utils.mjs"
+    }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "dev": "tsdown --watch",
+    "registry:build": "npx shadcn@latest build --output ../app-ui-docs/public/r"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.3.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tsdown": "^0.22.14",
+    "typescript": "^6.0.3"
+  }
+}
