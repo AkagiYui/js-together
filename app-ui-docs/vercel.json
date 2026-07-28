@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "installCommand": "curl -fsSL https://vite.plus | bash && /vercel/.vite-plus/bin/vp install",
+  "buildCommand": "/vercel/.vite-plus/bin/vp run build",
+  "devCommand": "/vercel/.vite-plus/bin/vp run dev"
+}
