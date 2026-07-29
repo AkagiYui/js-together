@@ -23,7 +23,7 @@ import { cn } from "@/lib/utils"
 
 /** 由 Iconify 图标数据构造一个接受 className / SVG props 的 React 组件。 */
 function makeIcon(icon: object, displayName: string) {
-  const Comp = ({ className, ...props }: IconProps) => (
+  const Comp = ({ className, ...props }: Omit<IconProps, "icon">) => (
     <Icon icon={icon as never} className={cn(className)} {...props} />
   )
   Comp.displayName = displayName
