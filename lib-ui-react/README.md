@@ -82,6 +82,12 @@ lib-ui-react/
 - `card-counter.tsx`：自定义 block（Button + useCounter），不在自动 ui 扫描内。
 - `use-counter.ts`：自定义 hook。
 
+### 7. Button 默认 `cursor: pointer`
+
+官方 shadcn 的 Button 不显式设置光标，渲染出的 `<button>` 在多数浏览器下走 UA 默认样式（通常即 `cursor: default`，受 `[type]`/祖先元素影响，行为不统一）。本库在 `buttonVariants` 的基类中直接加上 `cursor-pointer`，使所有 variant/size 的 Button 默认呈现手型指针，免去消费方逐个补样式。`disabled` 状态因基类已有的 `disabled:pointer-events-none` 不会触发悬停，故光标不会误导。
+
+> 若消费方需要还原为不强制指针，可通过 `className` 覆盖：`className="cursor-default"`（或其它 `cursor-*`）。
+
 ## 常用命令
 
 | 用途 | 命令 |
