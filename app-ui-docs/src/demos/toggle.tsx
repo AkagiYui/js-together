@@ -1,5 +1,4 @@
-import { BoldIcon } from "lucide-react";
-import { Toggle } from "@akagiyui/ui-react";
+import { BoldIcon, Toggle } from "@akagiyui/ui-react";
 
 export default function Demo() {
   return (

@@ -38,6 +38,7 @@ import { EmptyPage } from "./routes/empty";
 import { FieldPage } from "./routes/field";
 import { FormPage } from "./routes/form";
 import { HoverCardPage } from "./routes/hover-card";
+import { IconsPage } from "./routes/icons";
 import { InputPage } from "./routes/input";
 import { InputGroupPage } from "./routes/input-group";
 import { InputOtpPage } from "./routes/input-otp";
@@ -312,6 +313,14 @@ const rootRoute = createRootRoute({
               activeProps={{ className: "bg-accent text-foreground" }}
             >
               hover-card
+            </Link>
+            <Link
+              key="icons"
+              to={`/icons`}
+              className="rounded px-2 py-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              activeProps={{ className: "bg-accent text-foreground" }}
+            >
+              icons
             </Link>
             <Link
               key="input"
@@ -773,6 +782,12 @@ const HoverCardRoute = createRoute({
   component: HoverCardPage,
 });
 
+const IconsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/icons",
+  component: IconsPage,
+});
+
 const InputRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: "/input",
@@ -1002,6 +1017,7 @@ const routeTree = rootRoute.addChildren([
   FieldRoute,
   FormRoute,
   HoverCardRoute,
+  IconsRoute,
   InputRoute,
   InputGroupRoute,
   InputOtpRoute,

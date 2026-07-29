@@ -1,5 +1,4 @@
-import { ItalicIcon, UnderlineIcon } from "lucide-react";
-import { ToggleGroup, ToggleGroupItem } from "@akagiyui/ui-react";
+import { ItalicIcon, ToggleGroup, ToggleGroupItem, UnderlineIcon } from "@akagiyui/ui-react";
 
 export default function Demo() {
   return (

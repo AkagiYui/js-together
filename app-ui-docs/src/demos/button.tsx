@@ -1,5 +1,4 @@
-import { Button } from "@akagiyui/ui-react";
-import { DownloadIcon } from "lucide-react";
+import { Button, DownloadIcon } from "@akagiyui/ui-react";
 
 export default function Demo() {
   return (

@@ -32,6 +32,7 @@ export * from "./components/ui/empty";
 export * from "./components/ui/field";
 export * from "./components/ui/form";
 export * from "./components/ui/hover-card";
+export * from "./components/ui/icons";
 export * from "./components/ui/input";
 export * from "./components/ui/input-group";
 export * from "./components/ui/input-otp";

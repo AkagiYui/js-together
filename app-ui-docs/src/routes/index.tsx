@@ -360,6 +360,18 @@ export function IndexPage() {
         <code className="mt-3 block rounded bg-muted px-2 py-1 text-xs text-muted-foreground">npx shadcn@latest add @akagiyui/hover-card</code>
       </Link>
       <Link
+        key="icons"
+        to="/icons"
+        className="block rounded-lg border bg-card p-5 text-card-foreground shadow-sm transition-colors hover:bg-accent"
+      >
+        <div className="flex items-center justify-between">
+          <h2 className="text-lg font-semibold">Icons</h2>
+          <span className="rounded bg-secondary px-2 py-0.5 text-xs font-mono text-secondary-foreground">registry:ui</span>
+        </div>
+        <p className="mt-2 text-sm text-muted-foreground">shadcn new-york 组件。</p>
+        <code className="mt-3 block rounded bg-muted px-2 py-1 text-xs text-muted-foreground">npx shadcn@latest add @akagiyui/icons</code>
+      </Link>
+      <Link
         key="input"
         to="/input"
         className="block rounded-lg border bg-card p-5 text-card-foreground shadow-sm transition-colors hover:bg-accent"

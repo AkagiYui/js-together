@@ -1,6 +1,10 @@
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@akagiyui/ui-react";
-import { Button } from "@akagiyui/ui-react";
-import { ChevronDownIcon } from "lucide-react";
+import {
+  Button,
+  ChevronDownIcon,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@akagiyui/ui-react";
 
 export default function Demo() {
   return (

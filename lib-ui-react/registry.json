@@ -33,10 +33,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -168,10 +168,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -249,11 +249,11 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "react-day-picker"
       ],
       "registryDependencies": [
         "button",
+        "icons",
         "utils"
       ]
     },
@@ -286,11 +286,11 @@
         }
       ],
       "dependencies": [
-        "embla-carousel-react",
-        "lucide-react"
+        "embla-carousel-react"
       ],
       "registryDependencies": [
         "button",
+        "icons",
         "utils"
       ]
     },
@@ -326,10 +326,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -362,11 +362,11 @@
         }
       ],
       "dependencies": [
-        "@base-ui/react",
-        "lucide-react"
+        "@base-ui/react"
       ],
       "registryDependencies": [
         "button",
+        "icons",
         "input-group",
         "utils"
       ]
@@ -384,11 +384,11 @@
         }
       ],
       "dependencies": [
-        "cmdk",
-        "lucide-react"
+        "cmdk"
       ],
       "registryDependencies": [
         "dialog",
+        "icons",
         "utils"
       ]
     },
@@ -405,10 +405,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -425,11 +425,11 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
         "button",
+        "icons",
         "utils"
       ]
     },
@@ -481,10 +481,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -570,6 +570,53 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "icons",
+      "type": "registry:ui",
+      "title": "Icons",
+      "description": "shadcn Icons component (new-york).",
+      "files": [
+        {
+          "path": "src/components/ui/icons.tsx",
+          "type": "registry:ui"
+        }
+      ],
+      "dependencies": [
+        "@iconify-icons/lucide/alert-triangle",
+        "@iconify-icons/lucide/arrow-down",
+        "@iconify-icons/lucide/arrow-left",
+        "@iconify-icons/lucide/arrow-right",
+        "@iconify-icons/lucide/bold",
+        "@iconify-icons/lucide/check",
+        "@iconify-icons/lucide/check-circle-2",
+        "@iconify-icons/lucide/chevron-down",
+        "@iconify-icons/lucide/chevron-left",
+        "@iconify-icons/lucide/chevron-right",
+        "@iconify-icons/lucide/chevron-up",
+        "@iconify-icons/lucide/circle",
+        "@iconify-icons/lucide/copy",
+        "@iconify-icons/lucide/download",
+        "@iconify-icons/lucide/grip-vertical",
+        "@iconify-icons/lucide/info",
+        "@iconify-icons/lucide/italic",
+        "@iconify-icons/lucide/loader-2",
+        "@iconify-icons/lucide/minus",
+        "@iconify-icons/lucide/moon",
+        "@iconify-icons/lucide/more-horizontal",
+        "@iconify-icons/lucide/panel-left",
+        "@iconify-icons/lucide/search",
+        "@iconify-icons/lucide/sun",
+        "@iconify-icons/lucide/terminal",
+        "@iconify-icons/lucide/underline",
+        "@iconify-icons/lucide/x",
+        "@iconify-icons/lucide/x-octagon",
+        "@iconify/react"
+      ],
+      "registryDependencies": [
+        "utils"
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
@@ -619,10 +666,10 @@
         }
       ],
       "dependencies": [
-        "input-otp",
-        "lucide-react"
+        "input-otp"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -715,10 +762,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -751,11 +798,11 @@
         }
       ],
       "dependencies": [
-        "@shadcn/react/message-scroller",
-        "lucide-react"
+        "@shadcn/react/message-scroller"
       ],
       "registryDependencies": [
         "button",
+        "icons",
         "utils"
       ]
     },
@@ -771,10 +818,8 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "lucide-react"
-      ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -792,10 +837,10 @@
       ],
       "dependencies": [
         "class-variance-authority",
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -811,11 +856,9 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "lucide-react"
-      ],
       "registryDependencies": [
         "button",
+        "icons",
         "utils"
       ]
     },
@@ -870,10 +913,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -890,10 +933,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "react-resizable-panels"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -929,10 +972,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -968,10 +1011,10 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },
@@ -989,11 +1032,11 @@
       ],
       "dependencies": [
         "class-variance-authority",
-        "lucide-react",
         "radix-ui"
       ],
       "registryDependencies": [
         "button",
+        "icons",
         "input",
         "separator",
         "sheet",
@@ -1051,9 +1094,11 @@
         }
       ],
       "dependencies": [
-        "lucide-react",
         "next-themes",
         "sonner"
+      ],
+      "registryDependencies": [
+        "icons"
       ]
     },
     {
@@ -1068,10 +1113,8 @@
           "type": "registry:ui"
         }
       ],
-      "dependencies": [
-        "lucide-react"
-      ],
       "registryDependencies": [
+        "icons",
         "utils"
       ]
     },

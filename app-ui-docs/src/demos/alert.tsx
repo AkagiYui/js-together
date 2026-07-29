@@ -1,5 +1,4 @@
-import { Alert, AlertDescription, AlertTitle } from "@akagiyui/ui-react";
-import { TerminalIcon } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle, TerminalIcon } from "@akagiyui/ui-react";
 
 export default function Demo() {
   return (
