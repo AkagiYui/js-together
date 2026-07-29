@@ -1,4 +1,7 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
 
 /* 扫描组件库 dist 里的 class */
 @source "../../node_modules/@akagiyui/ui-react/dist";

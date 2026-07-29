@@ -8,17 +8,262 @@
       "types": "./dist/index.d.mts",
       "import": "./dist/index.mjs"
     },
+    "./styles.css": "./src/styles.css",
+    "./accordion": {
+      "types": "./dist/components/ui/accordion.d.mts",
+      "import": "./dist/components/ui/accordion.mjs"
+    },
+    "./alert": {
+      "types": "./dist/components/ui/alert.d.mts",
+      "import": "./dist/components/ui/alert.mjs"
+    },
+    "./alert-dialog": {
+      "types": "./dist/components/ui/alert-dialog.d.mts",
+      "import": "./dist/components/ui/alert-dialog.mjs"
+    },
+    "./aspect-ratio": {
+      "types": "./dist/components/ui/aspect-ratio.d.mts",
+      "import": "./dist/components/ui/aspect-ratio.mjs"
+    },
+    "./attachment": {
+      "types": "./dist/components/ui/attachment.d.mts",
+      "import": "./dist/components/ui/attachment.mjs"
+    },
+    "./avatar": {
+      "types": "./dist/components/ui/avatar.d.mts",
+      "import": "./dist/components/ui/avatar.mjs"
+    },
+    "./badge": {
+      "types": "./dist/components/ui/badge.d.mts",
+      "import": "./dist/components/ui/badge.mjs"
+    },
+    "./breadcrumb": {
+      "types": "./dist/components/ui/breadcrumb.d.mts",
+      "import": "./dist/components/ui/breadcrumb.mjs"
+    },
+    "./bubble": {
+      "types": "./dist/components/ui/bubble.d.mts",
+      "import": "./dist/components/ui/bubble.mjs"
+    },
     "./button": {
       "types": "./dist/components/ui/button.d.mts",
       "import": "./dist/components/ui/button.mjs"
+    },
+    "./button-group": {
+      "types": "./dist/components/ui/button-group.d.mts",
+      "import": "./dist/components/ui/button-group.mjs"
+    },
+    "./calendar": {
+      "types": "./dist/components/ui/calendar.d.mts",
+      "import": "./dist/components/ui/calendar.mjs"
+    },
+    "./card": {
+      "types": "./dist/components/ui/card.d.mts",
+      "import": "./dist/components/ui/card.mjs"
     },
     "./card-counter": {
       "types": "./dist/components/ui/card-counter.d.mts",
       "import": "./dist/components/ui/card-counter.mjs"
     },
+    "./carousel": {
+      "types": "./dist/components/ui/carousel.d.mts",
+      "import": "./dist/components/ui/carousel.mjs"
+    },
+    "./chart": {
+      "types": "./dist/components/ui/chart.d.mts",
+      "import": "./dist/components/ui/chart.mjs"
+    },
+    "./checkbox": {
+      "types": "./dist/components/ui/checkbox.d.mts",
+      "import": "./dist/components/ui/checkbox.mjs"
+    },
+    "./collapsible": {
+      "types": "./dist/components/ui/collapsible.d.mts",
+      "import": "./dist/components/ui/collapsible.mjs"
+    },
+    "./combobox": {
+      "types": "./dist/components/ui/combobox.d.mts",
+      "import": "./dist/components/ui/combobox.mjs"
+    },
+    "./command": {
+      "types": "./dist/components/ui/command.d.mts",
+      "import": "./dist/components/ui/command.mjs"
+    },
+    "./context-menu": {
+      "types": "./dist/components/ui/context-menu.d.mts",
+      "import": "./dist/components/ui/context-menu.mjs"
+    },
+    "./dialog": {
+      "types": "./dist/components/ui/dialog.d.mts",
+      "import": "./dist/components/ui/dialog.mjs"
+    },
+    "./direction": {
+      "types": "./dist/components/ui/direction.d.mts",
+      "import": "./dist/components/ui/direction.mjs"
+    },
+    "./drawer": {
+      "types": "./dist/components/ui/drawer.d.mts",
+      "import": "./dist/components/ui/drawer.mjs"
+    },
+    "./dropdown-menu": {
+      "types": "./dist/components/ui/dropdown-menu.d.mts",
+      "import": "./dist/components/ui/dropdown-menu.mjs"
+    },
+    "./empty": {
+      "types": "./dist/components/ui/empty.d.mts",
+      "import": "./dist/components/ui/empty.mjs"
+    },
+    "./field": {
+      "types": "./dist/components/ui/field.d.mts",
+      "import": "./dist/components/ui/field.mjs"
+    },
+    "./form": {
+      "types": "./dist/components/ui/form.d.mts",
+      "import": "./dist/components/ui/form.mjs"
+    },
+    "./hover-card": {
+      "types": "./dist/components/ui/hover-card.d.mts",
+      "import": "./dist/components/ui/hover-card.mjs"
+    },
+    "./input": {
+      "types": "./dist/components/ui/input.d.mts",
+      "import": "./dist/components/ui/input.mjs"
+    },
+    "./input-group": {
+      "types": "./dist/components/ui/input-group.d.mts",
+      "import": "./dist/components/ui/input-group.mjs"
+    },
+    "./input-otp": {
+      "types": "./dist/components/ui/input-otp.d.mts",
+      "import": "./dist/components/ui/input-otp.mjs"
+    },
+    "./item": {
+      "types": "./dist/components/ui/item.d.mts",
+      "import": "./dist/components/ui/item.mjs"
+    },
+    "./kbd": {
+      "types": "./dist/components/ui/kbd.d.mts",
+      "import": "./dist/components/ui/kbd.mjs"
+    },
+    "./label": {
+      "types": "./dist/components/ui/label.d.mts",
+      "import": "./dist/components/ui/label.mjs"
+    },
+    "./marker": {
+      "types": "./dist/components/ui/marker.d.mts",
+      "import": "./dist/components/ui/marker.mjs"
+    },
+    "./menubar": {
+      "types": "./dist/components/ui/menubar.d.mts",
+      "import": "./dist/components/ui/menubar.mjs"
+    },
+    "./message": {
+      "types": "./dist/components/ui/message.d.mts",
+      "import": "./dist/components/ui/message.mjs"
+    },
+    "./message-scroller": {
+      "types": "./dist/components/ui/message-scroller.d.mts",
+      "import": "./dist/components/ui/message-scroller.mjs"
+    },
+    "./native-select": {
+      "types": "./dist/components/ui/native-select.d.mts",
+      "import": "./dist/components/ui/native-select.mjs"
+    },
+    "./navigation-menu": {
+      "types": "./dist/components/ui/navigation-menu.d.mts",
+      "import": "./dist/components/ui/navigation-menu.mjs"
+    },
+    "./pagination": {
+      "types": "./dist/components/ui/pagination.d.mts",
+      "import": "./dist/components/ui/pagination.mjs"
+    },
+    "./popover": {
+      "types": "./dist/components/ui/popover.d.mts",
+      "import": "./dist/components/ui/popover.mjs"
+    },
+    "./progress": {
+      "types": "./dist/components/ui/progress.d.mts",
+      "import": "./dist/components/ui/progress.mjs"
+    },
+    "./radio-group": {
+      "types": "./dist/components/ui/radio-group.d.mts",
+      "import": "./dist/components/ui/radio-group.mjs"
+    },
+    "./resizable": {
+      "types": "./dist/components/ui/resizable.d.mts",
+      "import": "./dist/components/ui/resizable.mjs"
+    },
+    "./scroll-area": {
+      "types": "./dist/components/ui/scroll-area.d.mts",
+      "import": "./dist/components/ui/scroll-area.mjs"
+    },
+    "./select": {
+      "types": "./dist/components/ui/select.d.mts",
+      "import": "./dist/components/ui/select.mjs"
+    },
+    "./separator": {
+      "types": "./dist/components/ui/separator.d.mts",
+      "import": "./dist/components/ui/separator.mjs"
+    },
+    "./sheet": {
+      "types": "./dist/components/ui/sheet.d.mts",
+      "import": "./dist/components/ui/sheet.mjs"
+    },
+    "./sidebar": {
+      "types": "./dist/components/ui/sidebar.d.mts",
+      "import": "./dist/components/ui/sidebar.mjs"
+    },
+    "./skeleton": {
+      "types": "./dist/components/ui/skeleton.d.mts",
+      "import": "./dist/components/ui/skeleton.mjs"
+    },
+    "./slider": {
+      "types": "./dist/components/ui/slider.d.mts",
+      "import": "./dist/components/ui/slider.mjs"
+    },
+    "./sonner": {
+      "types": "./dist/components/ui/sonner.d.mts",
+      "import": "./dist/components/ui/sonner.mjs"
+    },
+    "./spinner": {
+      "types": "./dist/components/ui/spinner.d.mts",
+      "import": "./dist/components/ui/spinner.mjs"
+    },
+    "./switch": {
+      "types": "./dist/components/ui/switch.d.mts",
+      "import": "./dist/components/ui/switch.mjs"
+    },
+    "./table": {
+      "types": "./dist/components/ui/table.d.mts",
+      "import": "./dist/components/ui/table.mjs"
+    },
+    "./tabs": {
+      "types": "./dist/components/ui/tabs.d.mts",
+      "import": "./dist/components/ui/tabs.mjs"
+    },
+    "./textarea": {
+      "types": "./dist/components/ui/textarea.d.mts",
+      "import": "./dist/components/ui/textarea.mjs"
+    },
+    "./toggle": {
+      "types": "./dist/components/ui/toggle.d.mts",
+      "import": "./dist/components/ui/toggle.mjs"
+    },
+    "./toggle-group": {
+      "types": "./dist/components/ui/toggle-group.d.mts",
+      "import": "./dist/components/ui/toggle-group.mjs"
+    },
+    "./tooltip": {
+      "types": "./dist/components/ui/tooltip.d.mts",
+      "import": "./dist/components/ui/tooltip.mjs"
+    },
     "./use-counter": {
       "types": "./dist/hooks/use-counter.d.mts",
       "import": "./dist/hooks/use-counter.mjs"
+    },
+    "./use-mobile": {
+      "types": "./dist/hooks/use-mobile.d.mts",
+      "import": "./dist/hooks/use-mobile.mjs"
     },
     "./utils": {
       "types": "./dist/lib/utils.d.mts",
@@ -28,6 +273,7 @@
   "scripts": {
     "build": "tsdown",
     "dev": "tsdown --watch",
+    "gen": "node scripts/gen.mjs",
     "registry:build": "npx shadcn@latest build --output ../app-ui-docs/public/r"
   },
   "peerDependencies": {
@@ -35,10 +281,28 @@
     "react-dom": "^19.0.0"
   },
   "dependencies": {
+    "@base-ui/react": "^1.6.0",
+    "@hookform/resolvers": "^5.5.7",
     "@radix-ui/react-slot": "^1.3.3",
+    "@shadcn/react": "^0.2.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "tailwind-merge": "^3.6.0"
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.4.0",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.4.2",
+    "lucide-react": "^1.27.0",
+    "next-themes": "^0.4.6",
+    "radix-ui": "^1.6.7",
+    "react-day-picker": "^10.0.1",
+    "react-hook-form": "^7.83.0",
+    "react-resizable-panels": "^4.12.2",
+    "recharts": "3.8.0",
+    "sonner": "^2.0.7",
+    "tailwind-merge": "^3.6.0",
+    "tw-animate-css": "^1.4.0",
+    "vaul": "^1.1.2",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/react": "^19.2.17",

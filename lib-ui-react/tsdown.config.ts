@@ -3,10 +3,9 @@ import { defineConfig } from "tsdown";
 export default defineConfig({
   entry: [
     "src/index.ts",
-    "src/components/ui/button.tsx",
-    "src/components/ui/card-counter.tsx",
-    "src/hooks/use-counter.ts",
-    "src/lib/utils.ts",
+    "src/components/ui/*.tsx",
+    "src/hooks/*.ts",
+    "src/lib/*.ts",
   ],
   format: ["esm"],
   dts: true,
