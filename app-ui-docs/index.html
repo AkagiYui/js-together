@@ -4,6 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@akagiyui/ui-react</title>
+    <script>
+      // 在首帧前应用主题，避免深浅色闪屏 (FOUC)。
+      // 与 next-themes 约定一致：localStorage key 为 "theme"，
+      // 取值为 "light" / "dark" / "system"，缺省回退到 "system"。
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var theme = stored || "system";
+          var isDark =
+            theme === "dark" ||
+            (theme !== "light" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          var el = document.documentElement;
+          if (isDark) el.classList.add("dark");
+          el.style.colorScheme = isDark ? "dark" : "light";
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
