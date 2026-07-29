@@ -2,5 +2,22 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "installCommand": "curl -fsSL https://vite.plus | bash && /vercel/.vite-plus/bin/vp install",
   "buildCommand": "/vercel/.vite-plus/bin/vp run build",
-  "devCommand": "/vercel/.vite-plus/bin/vp run dev"
+  "devCommand": "/vercel/.vite-plus/bin/vp run dev",
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, s-maxage=86400, stale-while-revalidate=86400"
+        }
+      ]
+    }
+  ]
 }
