@@ -10,7 +10,9 @@ export default defineConfig({
   format: ["esm"],
   dts: true,
   clean: true,
-  external: ["react", "react-dom"],
+  deps: {
+    neverBundle: ["react", "react-dom"],
+  },
   unbundle: true,
   sourcemap: true,
 });
