@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { CheckIcon, ChevronRightIcon, CircleIcon } from "@/components/ui/icons"
+import { CheckIcon, ChevronRightIcon, CircleIcon } from "./icons"
 import { Menubar as MenubarPrimitive } from "radix-ui"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 function Menubar({
   className,

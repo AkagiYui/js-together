@@ -1,7 +1,7 @@
 import * as React from "react"
-import { ChevronDownIcon } from "@/components/ui/icons"
+import { ChevronDownIcon } from "./icons"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 function NativeSelect({
   className,

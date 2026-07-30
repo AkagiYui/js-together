@@ -103,6 +103,8 @@ importers:
         specifier: ^8.1.5
         version: 8.1.5(esbuild@0.28.1)(jiti@2.7.0)(terser@5.49.0)(yaml@2.9.0)
 
+  lib-core: {}
+
   lib-ui-react:
     dependencies:
       '@base-ui/react':

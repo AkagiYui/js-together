@@ -1,8 +1,8 @@
 import * as React from "react"
-import { ChevronDownIcon } from "@/components/ui/icons"
+import { ChevronDownIcon } from "./icons"
 import { Accordion as AccordionPrimitive } from "radix-ui"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 function Accordion({
   ...props

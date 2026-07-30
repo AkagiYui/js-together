@@ -1,6 +1,6 @@
 import { Icon, type IconProps } from "@iconify/react"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 /**
  * 图标统一封装层。

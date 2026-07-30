@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { XIcon } from "@/components/ui/icons"
+import { XIcon } from "./icons"
 import { Dialog as SheetPrimitive } from "radix-ui"
 
-import { cn } from "@/lib/utils"
+import { cn } from "../../lib/utils"
 
 function Sheet({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
