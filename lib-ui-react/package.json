@@ -6,271 +6,338 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.mts",
+      "source": "./src/index.ts",
       "import": "./dist/index.mjs"
     },
     "./styles.css": "./src/styles.css",
     "./accordion": {
       "types": "./dist/components/ui/accordion.d.mts",
+      "source": "./src/components/ui/accordion.tsx",
       "import": "./dist/components/ui/accordion.mjs"
     },
     "./alert": {
       "types": "./dist/components/ui/alert.d.mts",
+      "source": "./src/components/ui/alert.tsx",
       "import": "./dist/components/ui/alert.mjs"
     },
     "./alert-dialog": {
       "types": "./dist/components/ui/alert-dialog.d.mts",
+      "source": "./src/components/ui/alert-dialog.tsx",
       "import": "./dist/components/ui/alert-dialog.mjs"
     },
     "./aspect-ratio": {
       "types": "./dist/components/ui/aspect-ratio.d.mts",
+      "source": "./src/components/ui/aspect-ratio.tsx",
       "import": "./dist/components/ui/aspect-ratio.mjs"
     },
     "./attachment": {
       "types": "./dist/components/ui/attachment.d.mts",
+      "source": "./src/components/ui/attachment.tsx",
       "import": "./dist/components/ui/attachment.mjs"
     },
     "./avatar": {
       "types": "./dist/components/ui/avatar.d.mts",
+      "source": "./src/components/ui/avatar.tsx",
       "import": "./dist/components/ui/avatar.mjs"
     },
     "./badge": {
       "types": "./dist/components/ui/badge.d.mts",
+      "source": "./src/components/ui/badge.tsx",
       "import": "./dist/components/ui/badge.mjs"
     },
     "./breadcrumb": {
       "types": "./dist/components/ui/breadcrumb.d.mts",
+      "source": "./src/components/ui/breadcrumb.tsx",
       "import": "./dist/components/ui/breadcrumb.mjs"
     },
     "./bubble": {
       "types": "./dist/components/ui/bubble.d.mts",
+      "source": "./src/components/ui/bubble.tsx",
       "import": "./dist/components/ui/bubble.mjs"
     },
     "./button": {
       "types": "./dist/components/ui/button.d.mts",
+      "source": "./src/components/ui/button.tsx",
       "import": "./dist/components/ui/button.mjs"
     },
     "./button-group": {
       "types": "./dist/components/ui/button-group.d.mts",
+      "source": "./src/components/ui/button-group.tsx",
       "import": "./dist/components/ui/button-group.mjs"
     },
     "./calendar": {
       "types": "./dist/components/ui/calendar.d.mts",
+      "source": "./src/components/ui/calendar.tsx",
       "import": "./dist/components/ui/calendar.mjs"
     },
     "./card": {
       "types": "./dist/components/ui/card.d.mts",
+      "source": "./src/components/ui/card.tsx",
       "import": "./dist/components/ui/card.mjs"
     },
     "./card-counter": {
       "types": "./dist/components/ui/card-counter.d.mts",
+      "source": "./src/components/ui/card-counter.tsx",
       "import": "./dist/components/ui/card-counter.mjs"
     },
     "./carousel": {
       "types": "./dist/components/ui/carousel.d.mts",
+      "source": "./src/components/ui/carousel.tsx",
       "import": "./dist/components/ui/carousel.mjs"
     },
     "./chart": {
       "types": "./dist/components/ui/chart.d.mts",
+      "source": "./src/components/ui/chart.tsx",
       "import": "./dist/components/ui/chart.mjs"
     },
     "./checkbox": {
       "types": "./dist/components/ui/checkbox.d.mts",
+      "source": "./src/components/ui/checkbox.tsx",
       "import": "./dist/components/ui/checkbox.mjs"
     },
     "./collapsible": {
       "types": "./dist/components/ui/collapsible.d.mts",
+      "source": "./src/components/ui/collapsible.tsx",
       "import": "./dist/components/ui/collapsible.mjs"
     },
     "./combobox": {
       "types": "./dist/components/ui/combobox.d.mts",
+      "source": "./src/components/ui/combobox.tsx",
       "import": "./dist/components/ui/combobox.mjs"
     },
     "./command": {
       "types": "./dist/components/ui/command.d.mts",
+      "source": "./src/components/ui/command.tsx",
       "import": "./dist/components/ui/command.mjs"
     },
     "./context-menu": {
       "types": "./dist/components/ui/context-menu.d.mts",
+      "source": "./src/components/ui/context-menu.tsx",
       "import": "./dist/components/ui/context-menu.mjs"
     },
     "./dialog": {
       "types": "./dist/components/ui/dialog.d.mts",
+      "source": "./src/components/ui/dialog.tsx",
       "import": "./dist/components/ui/dialog.mjs"
     },
     "./direction": {
       "types": "./dist/components/ui/direction.d.mts",
+      "source": "./src/components/ui/direction.tsx",
       "import": "./dist/components/ui/direction.mjs"
     },
     "./drawer": {
       "types": "./dist/components/ui/drawer.d.mts",
+      "source": "./src/components/ui/drawer.tsx",
       "import": "./dist/components/ui/drawer.mjs"
     },
     "./dropdown-menu": {
       "types": "./dist/components/ui/dropdown-menu.d.mts",
+      "source": "./src/components/ui/dropdown-menu.tsx",
       "import": "./dist/components/ui/dropdown-menu.mjs"
     },
     "./empty": {
       "types": "./dist/components/ui/empty.d.mts",
+      "source": "./src/components/ui/empty.tsx",
       "import": "./dist/components/ui/empty.mjs"
     },
     "./field": {
       "types": "./dist/components/ui/field.d.mts",
+      "source": "./src/components/ui/field.tsx",
       "import": "./dist/components/ui/field.mjs"
     },
     "./form": {
       "types": "./dist/components/ui/form.d.mts",
+      "source": "./src/components/ui/form.tsx",
       "import": "./dist/components/ui/form.mjs"
     },
     "./hover-card": {
       "types": "./dist/components/ui/hover-card.d.mts",
+      "source": "./src/components/ui/hover-card.tsx",
       "import": "./dist/components/ui/hover-card.mjs"
     },
     "./icons": {
       "types": "./dist/components/ui/icons.d.mts",
+      "source": "./src/components/ui/icons.tsx",
       "import": "./dist/components/ui/icons.mjs"
     },
     "./input": {
       "types": "./dist/components/ui/input.d.mts",
+      "source": "./src/components/ui/input.tsx",
       "import": "./dist/components/ui/input.mjs"
     },
     "./input-group": {
       "types": "./dist/components/ui/input-group.d.mts",
+      "source": "./src/components/ui/input-group.tsx",
       "import": "./dist/components/ui/input-group.mjs"
     },
     "./input-otp": {
       "types": "./dist/components/ui/input-otp.d.mts",
+      "source": "./src/components/ui/input-otp.tsx",
       "import": "./dist/components/ui/input-otp.mjs"
     },
     "./item": {
       "types": "./dist/components/ui/item.d.mts",
+      "source": "./src/components/ui/item.tsx",
       "import": "./dist/components/ui/item.mjs"
     },
     "./kbd": {
       "types": "./dist/components/ui/kbd.d.mts",
+      "source": "./src/components/ui/kbd.tsx",
       "import": "./dist/components/ui/kbd.mjs"
     },
     "./label": {
       "types": "./dist/components/ui/label.d.mts",
+      "source": "./src/components/ui/label.tsx",
       "import": "./dist/components/ui/label.mjs"
     },
     "./marker": {
       "types": "./dist/components/ui/marker.d.mts",
+      "source": "./src/components/ui/marker.tsx",
       "import": "./dist/components/ui/marker.mjs"
     },
     "./menubar": {
       "types": "./dist/components/ui/menubar.d.mts",
+      "source": "./src/components/ui/menubar.tsx",
       "import": "./dist/components/ui/menubar.mjs"
     },
     "./message": {
       "types": "./dist/components/ui/message.d.mts",
+      "source": "./src/components/ui/message.tsx",
       "import": "./dist/components/ui/message.mjs"
     },
     "./message-scroller": {
       "types": "./dist/components/ui/message-scroller.d.mts",
+      "source": "./src/components/ui/message-scroller.tsx",
       "import": "./dist/components/ui/message-scroller.mjs"
     },
     "./native-select": {
       "types": "./dist/components/ui/native-select.d.mts",
+      "source": "./src/components/ui/native-select.tsx",
       "import": "./dist/components/ui/native-select.mjs"
     },
     "./navigation-menu": {
       "types": "./dist/components/ui/navigation-menu.d.mts",
+      "source": "./src/components/ui/navigation-menu.tsx",
       "import": "./dist/components/ui/navigation-menu.mjs"
     },
     "./pagination": {
       "types": "./dist/components/ui/pagination.d.mts",
+      "source": "./src/components/ui/pagination.tsx",
       "import": "./dist/components/ui/pagination.mjs"
     },
     "./popover": {
       "types": "./dist/components/ui/popover.d.mts",
+      "source": "./src/components/ui/popover.tsx",
       "import": "./dist/components/ui/popover.mjs"
     },
     "./progress": {
       "types": "./dist/components/ui/progress.d.mts",
+      "source": "./src/components/ui/progress.tsx",
       "import": "./dist/components/ui/progress.mjs"
     },
     "./radio-group": {
       "types": "./dist/components/ui/radio-group.d.mts",
+      "source": "./src/components/ui/radio-group.tsx",
       "import": "./dist/components/ui/radio-group.mjs"
     },
     "./resizable": {
       "types": "./dist/components/ui/resizable.d.mts",
+      "source": "./src/components/ui/resizable.tsx",
       "import": "./dist/components/ui/resizable.mjs"
     },
     "./scroll-area": {
       "types": "./dist/components/ui/scroll-area.d.mts",
+      "source": "./src/components/ui/scroll-area.tsx",
       "import": "./dist/components/ui/scroll-area.mjs"
     },
     "./select": {
       "types": "./dist/components/ui/select.d.mts",
+      "source": "./src/components/ui/select.tsx",
       "import": "./dist/components/ui/select.mjs"
     },
     "./separator": {
       "types": "./dist/components/ui/separator.d.mts",
+      "source": "./src/components/ui/separator.tsx",
       "import": "./dist/components/ui/separator.mjs"
     },
     "./sheet": {
       "types": "./dist/components/ui/sheet.d.mts",
+      "source": "./src/components/ui/sheet.tsx",
       "import": "./dist/components/ui/sheet.mjs"
     },
     "./sidebar": {
       "types": "./dist/components/ui/sidebar.d.mts",
+      "source": "./src/components/ui/sidebar.tsx",
       "import": "./dist/components/ui/sidebar.mjs"
     },
     "./skeleton": {
       "types": "./dist/components/ui/skeleton.d.mts",
+      "source": "./src/components/ui/skeleton.tsx",
       "import": "./dist/components/ui/skeleton.mjs"
     },
     "./slider": {
       "types": "./dist/components/ui/slider.d.mts",
+      "source": "./src/components/ui/slider.tsx",
       "import": "./dist/components/ui/slider.mjs"
     },
     "./sonner": {
       "types": "./dist/components/ui/sonner.d.mts",
+      "source": "./src/components/ui/sonner.tsx",
       "import": "./dist/components/ui/sonner.mjs"
     },
     "./spinner": {
       "types": "./dist/components/ui/spinner.d.mts",
+      "source": "./src/components/ui/spinner.tsx",
       "import": "./dist/components/ui/spinner.mjs"
     },
     "./switch": {
       "types": "./dist/components/ui/switch.d.mts",
+      "source": "./src/components/ui/switch.tsx",
       "import": "./dist/components/ui/switch.mjs"
     },
     "./table": {
       "types": "./dist/components/ui/table.d.mts",
+      "source": "./src/components/ui/table.tsx",
       "import": "./dist/components/ui/table.mjs"
     },
     "./tabs": {
       "types": "./dist/components/ui/tabs.d.mts",
+      "source": "./src/components/ui/tabs.tsx",
       "import": "./dist/components/ui/tabs.mjs"
     },
     "./textarea": {
       "types": "./dist/components/ui/textarea.d.mts",
+      "source": "./src/components/ui/textarea.tsx",
       "import": "./dist/components/ui/textarea.mjs"
     },
     "./toggle": {
       "types": "./dist/components/ui/toggle.d.mts",
+      "source": "./src/components/ui/toggle.tsx",
       "import": "./dist/components/ui/toggle.mjs"
     },
     "./toggle-group": {
       "types": "./dist/components/ui/toggle-group.d.mts",
+      "source": "./src/components/ui/toggle-group.tsx",
       "import": "./dist/components/ui/toggle-group.mjs"
     },
     "./tooltip": {
       "types": "./dist/components/ui/tooltip.d.mts",
+      "source": "./src/components/ui/tooltip.tsx",
       "import": "./dist/components/ui/tooltip.mjs"
     },
     "./use-counter": {
       "types": "./dist/hooks/use-counter.d.mts",
+      "source": "./src/hooks/use-counter.ts",
       "import": "./dist/hooks/use-counter.mjs"
     },
     "./use-mobile": {
       "types": "./dist/hooks/use-mobile.d.mts",
+      "source": "./src/hooks/use-mobile.ts",
       "import": "./dist/hooks/use-mobile.mjs"
     },
     "./utils": {
       "types": "./dist/lib/utils.d.mts",
+      "source": "./src/lib/utils.ts",
       "import": "./dist/lib/utils.mjs"
     }
   },
