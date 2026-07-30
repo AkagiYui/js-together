@@ -3,8 +3,8 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 扫描组件库 dist 里的 class */
-@source "../../node_modules/@akagiyui/ui-react/dist";
+/* 扫描组件库源码里的 class（@source 相对于本 css 文件 src/styles.css） */
+@source "../node_modules/@akagiyui/ui-react/src";
 
 /* shadcn 标准 token (neutral baseColor, new-york style) */
 :root {
