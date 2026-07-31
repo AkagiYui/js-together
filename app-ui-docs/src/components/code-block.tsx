@@ -6,6 +6,7 @@ import githubDark from "@shikijs/themes/github-dark";
 import githubLight from "@shikijs/themes/github-light";
 import tsxLang from "@shikijs/langs/tsx";
 import bashLang from "@shikijs/langs/bash";
+import jsonLang from "@shikijs/langs/json";
 import { Button } from "@akagiyui/ui-react";
 import { CheckIcon, CopyIcon } from "@akagiyui/ui-react";
 
@@ -16,17 +17,42 @@ function getHighlighter() {
   if (!highlighterPromise) {
     highlighterPromise = createHighlighterCore({
       themes: [githubDark, githubLight],
-      langs: [tsxLang, bashLang],
+      langs: [tsxLang, bashLang, jsonLang],
       engine: createOnigurumaEngine(import("shiki/wasm")),
     });
   }
   return highlighterPromise;
 }
 
+/**
+ * 把代码块里出现的语言名映射到已注册的 shiki 语言；
+ * 未知/缺失语言回退到纯文本（shiki 内置 text/plaintext，无需注册）。
+ */
+function resolveLang(lang?: string): string {
+  switch ((lang ?? "").toLowerCase()) {
+    case "tsx":
+    case "jsx":
+    case "ts":
+    case "js":
+    case "typescript":
+    case "javascript":
+      return "tsx"; // tsx 语法已覆盖 ts/js/jsx
+    case "bash":
+    case "sh":
+    case "shell":
+    case "console":
+      return "bash";
+    case "json":
+      return "json";
+    default:
+      return "text";
+  }
+}
+
 type CodeBlockProps = {
   code: string;
-  /** 代码语言，默认 tsx */
-  lang?: "tsx" | "bash";
+  /** 代码语言（默认 tsx）；未知语言自动回退纯文本 */
+  lang?: string;
   className?: string;
 };
 
@@ -35,6 +61,7 @@ export function CodeBlock({ code, lang = "tsx", className }: CodeBlockProps) {
   // 未解析主题前（首帧/SSR）默认按 dark 渲染，避免闪烁。
   const isDark = resolvedTheme !== "light";
   const theme = isDark ? "github-dark" : "github-light";
+  const langId = resolveLang(lang);
 
   const [html, setHtml] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
@@ -45,7 +72,7 @@ export function CodeBlock({ code, lang = "tsx", className }: CodeBlockProps) {
       if (!active) return;
       setHtml(
         h.codeToHtml(code, {
-          lang,
+          lang: langId,
           theme,
         }),
       );
@@ -53,7 +80,7 @@ export function CodeBlock({ code, lang = "tsx", className }: CodeBlockProps) {
     return () => {
       active = false;
     };
-  }, [code, lang, theme]);
+  }, [code, langId, theme]);
 
   async function handleCopy() {
     try {
@@ -73,7 +100,8 @@ export function CodeBlock({ code, lang = "tsx", className }: CodeBlockProps) {
         size="icon-xs"
         aria-label="复制代码"
         onClick={handleCopy}
-        className="absolute top-2 right-2 z-10 opacity-0 transition-opacity group-hover:opacity-100 data-[state=copied]:opacity-100"
+        // 触屏设备无 hover，窄屏常显；md+ 仅 hover 时显示
+        className="absolute top-2 right-2 z-10 opacity-100 transition-opacity group-hover:opacity-100 md:opacity-0 md:group-hover:opacity-100 data-[state=copied]:opacity-100"
         data-state={copied ? "copied" : "idle"}
       >
         {copied ? <CheckIcon /> : <CopyIcon />}

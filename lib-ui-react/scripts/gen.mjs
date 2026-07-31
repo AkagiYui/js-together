@@ -5,10 +5,11 @@
  *   1. src/index.ts                     —— barrel re-exports
  *   2. package.json 的 exports 字段      —— 子路径导出
  *   3. registry.json                    —— shadcn registry 条目
- *   4. ../app-ui-docs/src/App.tsx       —— 侧栏布局 + 路由树
+ *   4. ../app-ui-docs/src/App.tsx       —— 响应式布局（桌面侧栏 + 窄屏 Sheet 抽屉）+ 路由树
  *   5. ../app-ui-docs/src/routes/*.tsx   —— 每个组件一个文档页
- *   6. ../app-ui-docs/src/routes/index.tsx —— 组件总览
- *   7. ../app-ui-docs/src/demos/registry.ts  —— 已存在 demo 的懒加载映射
+ *   6. ../app-ui-docs/src/routes/index.tsx —— 首页：渲染 lib-ui-react/README.md + 分组组件一览
+ *   7. ../app-ui-docs/src/components/component-groups.ts —— 组件分组数据（已定制/自定义/原版）
+ *   8. ../app-ui-docs/src/demos/registry.ts  —— 已存在 demo 的懒加载映射
  *
  * 运行：pnpm --filter @akagiyui/ui-react gen
  */
@@ -24,6 +25,55 @@ const DOCS = resolve(LIB, "../app-ui-docs");
 const BLOCK_NAMES = ["card-counter"];
 /** 自定义 hook，registry.json 中保留手写项，不自动生成 hook 项 */
 const SPECIAL_HOOKS = ["use-counter"];
+
+// ---------- 组件分组 ----------
+/**
+ * 自定义组件：非 shadcn 官方组件、本库自研。
+ * 判定依据：二者均不在批量导入 shadcn new-york 组件的提交（d060109）中，
+ * 属后续自研产物。新增自研组件时把名字加到这里。
+ */
+const CUSTOM_COMPONENTS = new Set(["card-counter", "icons"]);
+/**
+ * 手动维护的「已定制」清单：源码有实质改动、但无法自动识别。
+ * 自动识别规则：导入 `./icons`（Iconify 图标封装，官方 shadcn 用 lucide-react）。
+ * 当前仅 button —— 基类追加了 `cursor-pointer`（见 lib-ui-react README 差异第 7 条）。
+ */
+const CUSTOMIZED_OVERRIDES = new Set(["button"]);
+/** 自动识别「已定制」：从 `./icons` 导入图标，说明已接入 Iconify 图标方案 */
+const CUSTOMIZED_IMPORT_RE = /from\s+["']\.\/icons["']/;
+
+/** 分组元信息（顺序即展示顺序：已定制 → 自定义 → 原版） */
+const GROUPS = {
+  customized: {
+    key: "customized",
+    title: "已定制",
+    badge: "已定制",
+    description: "基于 shadcn 官方组件改编，与原版不同（Iconify 图标方案、cursor-pointer 等）。",
+    cardDesc: "已适配本库定制（Iconify 图标方案等），与官方 shadcn 不同。",
+  },
+  custom: {
+    key: "custom",
+    title: "自定义",
+    badge: "自定义",
+    description: "非 shadcn 官方组件，本库自研。",
+    cardDesc: "本库自研组件，不在官方 shadcn 中。",
+  },
+  original: {
+    key: "original",
+    title: "原版",
+    badge: "原版",
+    description: "与官方 shadcn new-york 组件一致（仅作相对路径改写）。",
+    cardDesc: "shadcn new-york 原版组件。",
+  },
+};
+
+/** 判定组件所属分组：custom(自定义) > customized(已定制) > original(原版) */
+function classifyGroup(name) {
+  if (CUSTOM_COMPONENTS.has(name)) return "custom";
+  const src = read(join(LIB, `src/components/ui/${name}.tsx`));
+  if (CUSTOMIZED_OVERRIDES.has(name) || CUSTOMIZED_IMPORT_RE.test(src)) return "customized";
+  return "original";
+}
 
 const PEER_DEPS = new Set(["react", "react-dom"]);
 
@@ -71,7 +121,15 @@ function classify(specifiers) {
         reg.add(s.slice("@/hooks/".length));
       }
     } else if (s.startsWith(".")) {
-      // 相对路径，忽略
+      // 相对路径（当前源码风格）：./button、../hooks/use-mobile、../../lib/utils
+      const rel = s.replace(/^(\.\.?\/)+/, "");
+      if (rel.startsWith("lib/")) {
+        reg.add(rel.slice("lib/".length));
+      } else if (rel.startsWith("hooks/")) {
+        reg.add(rel.slice("hooks/".length));
+      } else {
+        reg.add(rel);
+      }
     } else if (!PEER_DEPS.has(s)) {
       npm.add(s);
     }
@@ -104,30 +162,34 @@ function genIndex() {
 }
 
 // ---------- 3. 生成 package.json exports ----------
+/**
+ * 直接指向源码（tsx/ts），配合「源码即产物」的消费方式（见 2aca76c 起的约定）：
+ * workspace/文档站直接消费源码，无需先跑 tsdown 构建。
+ */
 function genExports() {
   const exp = {
     ".": {
-      types: "./dist/index.d.mts",
-      import: "./dist/index.mjs",
+      types: "./src/index.ts",
+      import: "./src/index.ts",
     },
     "./styles.css": "./src/styles.css",
   };
   for (const name of allUiForExport) {
     exp[`./${name}`] = {
-      types: `./dist/components/ui/${name}.d.mts`,
-      import: `./dist/components/ui/${name}.mjs`,
+      types: `./src/components/ui/${name}.tsx`,
+      import: `./src/components/ui/${name}.tsx`,
     };
   }
   for (const h of hooks) {
     exp[`./${h}`] = {
-      types: `./dist/hooks/${h}.d.mts`,
-      import: `./dist/hooks/${h}.mjs`,
+      types: `./src/hooks/${h}.ts`,
+      import: `./src/hooks/${h}.ts`,
     };
   }
   for (const l of libs) {
     exp[`./${l}`] = {
-      types: `./dist/lib/${l}.d.mts`,
-      import: `./dist/lib/${l}.mjs`,
+      types: `./src/lib/${l}.ts`,
+      import: `./src/lib/${l}.ts`,
     };
   }
   return exp;
@@ -241,31 +303,67 @@ function genRouteFile(name) {
 }
 
 function genIndexRoute() {
-  const cards = allUiForExport
-    .map(
-      (name) =>
-        `      <Link\n        key="${name}"\n        to="/${name}"\n        className="block rounded-lg border bg-card p-5 text-card-foreground shadow-sm transition-colors hover:bg-accent"\n      >\n        <div className="flex items-center justify-between">\n          <h2 className="text-lg font-semibold">${toPascal(name)}</h2>\n          <span className="rounded bg-secondary px-2 py-0.5 text-xs font-mono text-secondary-foreground">registry:ui</span>\n        </div>\n        <p className="mt-2 text-sm text-muted-foreground">shadcn new-york 组件。</p>\n        <code className="mt-3 block rounded bg-muted px-2 py-1 text-xs text-muted-foreground">npx shadcn@latest add @akagiyui/${name}</code>\n      </Link>`
-    )
-    .join("\n");
   return [
     "/** AUTO-GENERATED by lib-ui-react/scripts/gen.mjs */",
-    `import { Link } from "@tanstack/react-router";`,
+    `import { Markdown } from "../components/markdown";`,
+    `import { ComponentGrid } from "../components/component-grid";`,
+    `import { componentGroups } from "../components/component-groups";`,
+    `import readme from "../../../lib-ui-react/README.md?raw";`,
     "",
     `export function IndexPage() {`,
     `  return (`,
-    `    <div className="space-y-8">`,
-    `      <div>`,
-    `        <h1 className="text-3xl font-bold text-foreground">@akagiyui/ui-react</h1>`,
-    `        <p className="mt-2 text-muted-foreground">`,
-    `          基于 shadcn (new-york) 的个人 React 组件库。支持 npm 包与 registry 双模消费。`,
-    `        </p>`,
-    `      </div>`,
-    `      <div className="grid gap-4 sm:grid-cols-2">`,
-    cards,
-    `      </div>`,
+    `    <div className="space-y-10">`,
+    `      <Markdown content={readme} />`,
+    `      <ComponentGrid groups={componentGroups} />`,
     `    </div>`,
     `  );`,
     `}`,
+  ].join("\n");
+}
+
+/** 生成分组数据：供侧栏导航与首页卡片网格共用 */
+function genComponentGroups() {
+  const groups = ["customized", "custom", "original"].map((key) => {
+    const meta = GROUPS[key];
+    return {
+      title: meta.title,
+      badge: meta.badge,
+      description: meta.description,
+      cardDesc: meta.cardDesc,
+      items: allUiForExport.filter((n) => classifyGroup(n) === key).sort((a, b) => a.localeCompare(b)),
+    };
+  });
+  const body = groups
+    .map(
+      (g) =>
+        `  {\n` +
+        `    title: ${JSON.stringify(g.title)},\n` +
+        `    badge: ${JSON.stringify(g.badge)},\n` +
+        `    description: ${JSON.stringify(g.description)},\n` +
+        `    cardDesc: ${JSON.stringify(g.cardDesc)},\n` +
+        `    items: ${JSON.stringify(g.items)},\n` +
+        `  }`
+    )
+    .join(",\n");
+  return [
+    "/** AUTO-GENERATED by lib-ui-react/scripts/gen.mjs */",
+    "",
+    `export type ComponentGroup = {`,
+    `  /** 分组标题 */`,
+    `  title: string;`,
+    `  /** 卡片徽标文字 */`,
+    `  badge: string;`,
+    `  /** 分组说明（侧栏/首页标题下方） */`,
+    `  description: string;`,
+    `  /** 卡片描述 */`,
+    `  cardDesc: string;`,
+    `  /** 组件名列表（即路由名） */`,
+    `  items: string[];`,
+    `};`,
+    "",
+    `export const componentGroups: ComponentGroup[] = [`,
+    body,
+    `];`,
   ].join("\n");
 }
 
@@ -280,50 +378,79 @@ function genApp() {
     )
     .join("\n\n");
   const addChildren = allUiForExport.map((n) => `${toPascal(n)}Route`).join(",\n  ");
-  const navLinks = allUiForExport
-    .map(
-      (n) =>
-        `            <Link\n              key="${n}"\n              to={\`/${n}\`}\n              className="rounded px-2 py-1 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"\n              activeProps={{ className: "bg-accent text-foreground" }}\n            >\n              ${n}\n            </Link>`
-    )
-    .join("\n");
   return [
     "/** AUTO-GENERATED by lib-ui-react/scripts/gen.mjs */",
+    `import { useState } from "react";`,
     `import {`,
     `  createRootRoute,`,
     `  createRoute,`,
     `  createRouter,`,
     `  Outlet,`,
-    `  Link,`,
     `} from "@tanstack/react-router";`,
-    `import { Toaster } from "@akagiyui/ui-react";`,
+    `import {`,
+    `  Toaster,`,
+    `  Button,`,
+    `  Sheet,`,
+    `  SheetContent,`,
+    `  SheetHeader,`,
+    `  SheetTitle,`,
+    `  SheetTrigger,`,
+    `  PanelLeftIcon,`,
+    `} from "@akagiyui/ui-react";`,
     `import { ThemeToggle } from "./components/theme-toggle";`,
+    `import { SidebarNav } from "./components/sidebar-nav";`,
     `import { IndexPage } from "./routes/index";`,
     imports,
     "",
-    `const rootRoute = createRootRoute({`,
-    `  component: () => (`,
+    `function RootLayout() {`,
+    `  const [navOpen, setNavOpen] = useState(false);`,
+    `  return (`,
     `    <div className="min-h-screen bg-background text-foreground">`,
-    `      <div className="flex">`,
-    `        <aside className="sticky top-0 h-screen w-56 shrink-0 overflow-y-auto border-r p-4">`,
-    `          <Link to="/" className="text-base font-semibold text-foreground">`,
-    `            @akagiyui/ui-react`,
-    `          </Link>`,
-    `          <nav className="mt-4 flex flex-col gap-0.5 text-sm">`,
-    navLinks,
-    `          </nav>`,
+    `      <div className="lg:flex">`,
+    `        {/* 桌面侧栏（lg+ 显示，窄屏走 Sheet 抽屉） */}`,
+    `        <aside className="sticky top-0 hidden h-screen w-56 shrink-0 overflow-y-auto border-r p-4 lg:block">`,
+    `          <SidebarNav />`,
     `        </aside>`,
-    `        <div className="flex-1 min-w-0">`,
-    `          <header className="flex items-center justify-end border-b px-6 py-3">`,
+    `        <div className="flex min-w-0 flex-1 flex-col">`,
+    `          <header className="sticky top-0 z-30 flex items-center justify-between gap-2 border-b bg-background/80 px-4 py-3 backdrop-blur lg:justify-end lg:px-8">`,
+    `            <Sheet open={navOpen} onOpenChange={setNavOpen}>`,
+    `              <SheetTrigger asChild>`,
+    `                <Button`,
+    `                  type="button"`,
+    `                  variant="ghost"`,
+    `                  size="icon"`,
+    `                  aria-label="打开组件导航"`,
+    `                  className="lg:hidden"`,
+    `                >`,
+    `                  <PanelLeftIcon />`,
+    `                </Button>`,
+    `              </SheetTrigger>`,
+    `              <SheetContent side="left" className="w-72 gap-0 p-0">`,
+    `                <SheetHeader className="border-b">`,
+    `                  <SheetTitle>组件导航</SheetTitle>`,
+    `                </SheetHeader>`,
+    `                <div className="min-h-0 flex-1 overflow-y-auto p-4">`,
+    `                  <SidebarNav onNavigate={() => setNavOpen(false)} />`,
+    `                </div>`,
+    `              </SheetContent>`,
+    `            </Sheet>`,
+    `            <span className="truncate text-sm font-semibold lg:hidden">`,
+    `              @akagiyui/ui-react`,
+    `            </span>`,
     `            <ThemeToggle />`,
     `          </header>`,
-    `          <main className="mx-auto max-w-5xl px-6 py-10">`,
+    `          <main className="mx-auto w-full max-w-5xl px-4 py-6 sm:px-6 lg:py-10">`,
     `            <Outlet />`,
     `          </main>`,
     `        </div>`,
     `      </div>`,
     `      <Toaster richColors position="bottom-right" />`,
     `    </div>`,
-    `  ),`,
+    `  );`,
+    `}`,
+    "",
+    `const rootRoute = createRootRoute({`,
+    `  component: RootLayout,`,
     `});`,
     "",
     `const indexRoute = createRoute({`,
@@ -396,6 +523,12 @@ function main() {
     write(join(routesDir, `${name}.tsx`), genRouteFile(name));
   }
   console.log(`✔ docs routes (${allUiForExport.length} pages)`);
+
+  // docs: component-groups.ts（分组数据）
+  const componentsDir = join(DOCS, "src/components");
+  mkdirSync(componentsDir, { recursive: true });
+  write(join(componentsDir, "component-groups.ts"), genComponentGroups());
+  console.log("✔ docs component-groups.ts");
 
   // docs: App.tsx
   write(join(DOCS, "src/App.tsx"), genApp());

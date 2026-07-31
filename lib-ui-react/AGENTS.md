@@ -39,8 +39,12 @@ lib-ui-react/
 
 ## 关键约定
 
-- **不要手动编辑自动生成的文件**：`src/index.ts`、`registry.json`、`package.json` 的 `exports` 字段，以及 `app-ui-docs` 下的 `src/App.tsx`、`src/routes/*.tsx`、`src/routes/index.tsx`、`src/demos/registry.ts`。这些由 `scripts/gen.mjs` 生成。
+- **不要手动编辑自动生成的文件**：`src/index.ts`、`registry.json`、`package.json` 的 `exports` 字段，以及 `app-ui-docs` 下的 `src/App.tsx`、`src/routes/*.tsx`、`src/routes/index.tsx`、`src/demos/registry.ts`、`src/components/component-groups.ts`。这些由 `scripts/gen.mjs` 生成。
 - **改组件/增删组件后必须重新生成**：`vp run -F @akagiyui/ui-react gen`。该脚本幂等，二次运行无 diff 即正确。
+- **组件分组规则**：文档站侧栏/首页按「已定制 / 自定义 / 原版」三组展示，判定逻辑在 `scripts/gen.mjs` 的 `classifyGroup()`：
+  - `已定制`＝导入 `./icons`（Iconify 图标封装，与官方 `lucide-react` 不同）自动识别，外加手动清单 `CUSTOMIZED_OVERRIDES`（当前仅 `button`，因基类追加了 `cursor-pointer`）；
+  - `自定义`＝`CUSTOM_COMPONENTS` 清单（`card-counter`、`icons`，均为 shadcn 批量导入之后自研）；
+  - 其余为 `原版`。改出实质差异但无法被自动识别时，把组件名加进 `CUSTOMIZED_OVERRIDES`。
 - **`card-counter.tsx` 与 `use-counter.ts` 是自定义产物**，不在自动 ui 扫描内，registry 中作为特殊 block/hook 项保留，可手动维护。
 - **新增组件预览**：在 `app-ui-docs/src/demos/<组件名>.tsx` 写默认导出的 demo，再跑一次 `gen`，文档页即出现该预览；未提供 demo 的组件文档页显示「预览待补充」占位，不影响构建。
 - **依赖**：组件所需的外部依赖（radix-ui、lucide-react、cmdk、vaul 等）由 `shadcn add` 自动写入 `package.json`；动画工具类依赖 `tw-animate-css`，主题相关依赖 `next-themes`/`sonner`。
