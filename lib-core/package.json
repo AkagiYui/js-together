@@ -6,6 +6,7 @@
   "exports": {
     ".": "./src/index.ts",
     "./time": "./src/time.ts",
-    "./clipboard": "./src/clipboard.ts"
+    "./clipboard": "./src/clipboard.ts",
+    "./request": "./src/request/index.ts"
   }
 }
